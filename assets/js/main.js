@@ -1,55 +1,57 @@
 // ======================================================
-// ⚡ Script principal (header + galerie produit)
+// ⚡ Script principal du thème
+// - Gère le header (burger + recherche + sous-menus)
+// - Gère la galerie produit (image principale + miniatures)
 // ======================================================
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Init header
-  initHeaderEvents(); // burger + overlay recherche
-  initSubmenus();     // sous-menus au clic
-
-  // Init galerie produit
-  initProductGallery();
+  initHeaderEvents();   // Gestion du burger + overlay recherche
+  initSubmenus();       // Gestion des sous-menus
+  initProductGallery(); // Gestion de la galerie produit
 });
 
+
 // ======================================================
-// 🔹 Gestion du burger et de la recherche overlay
+// 🔹 1. Gestion du burger et de la recherche overlay
 // ======================================================
 function initHeaderEvents() {
-  const searchToggle = document.querySelector(".search-toggle");
-  const searchOverlay = document.querySelector(".search-overlay");
-  const burger = document.querySelector(".burger");
-  const nav = document.querySelector("nav");
+  const searchToggle   = document.querySelector(".search-toggle");  // Bouton loupe
+  const searchOverlay  = document.querySelector(".search-overlay"); // Overlay recherche
+  const burger         = document.querySelector(".burger");         // Bouton burger
+  const nav            = document.querySelector("nav");             // Navigation principale
 
   // Toggle overlay recherche (mobile)
   if (searchToggle && searchOverlay) {
     searchToggle.addEventListener("click", (e) => {
       e.preventDefault();
-      searchOverlay.classList.toggle("active"); // affiche/masque overlay
+      searchOverlay.classList.toggle("active"); // affiche/masque l’overlay
     });
   }
 
   // Toggle menu burger (mobile)
   if (burger && nav) {
     burger.addEventListener("click", () => {
-      burger.classList.toggle("active"); // anime le burger
-      nav.classList.toggle("open");      // ouvre/ferme la nav
+      burger.classList.toggle("active"); // animation du burger
+      nav.classList.toggle("open");      // ouverture/fermeture nav
     });
   }
 }
 
+
 // ======================================================
-// 🔹 Gestion des sous-menus au clic
+// 🔹 2. Gestion des sous-menus (au clic)
 // ======================================================
 function initSubmenus() {
   const submenuParents = document.querySelectorAll("nav .menu-item-has-children");
 
+  // Ouverture / fermeture au clic
   submenuParents.forEach((parent) => {
     const link = parent.querySelector("a");
 
     link.addEventListener("click", (e) => {
       e.preventDefault();
 
-      // Ferme les autres sous-menus
+      // Ferme tous les autres sous-menus
       submenuParents.forEach((other) => {
         if (other !== parent) other.classList.remove("open");
       });
@@ -59,7 +61,7 @@ function initSubmenus() {
     });
   });
 
-  // Ferme les sous-menus si clic à l’extérieur
+  // Ferme tous les sous-menus si clic en dehors de la nav
   document.addEventListener("click", (e) => {
     const nav = document.querySelector("nav");
     if (nav && !nav.contains(e.target)) {
@@ -68,19 +70,21 @@ function initSubmenus() {
   });
 }
 
+
 // ======================================================
-// 🔹 Utilitaires pour animations (slideUp / slideDown)
+// 🔹 3. Utilitaires pour animations (slideUp / slideDown)
 // ======================================================
 function slideDown(element) {
   if (!element) return;
-  element.style.display = "block";                  // visible
-  const height = element.scrollHeight + "px";       // hauteur totale
-  element.style.maxHeight = "0";                    // départ à 0
-  element.offsetHeight;                             // force reflow
-  element.style.transition = "max-height 0.3s ease";
-  element.style.maxHeight = height;                 // anime vers la vraie hauteur
 
-  // Après transition : enlever max-height fixe
+  element.style.display = "block";                  // rendre visible
+  const height = element.scrollHeight + "px";       // récupérer hauteur
+  element.style.maxHeight = "0";                    // départ fermé
+  element.offsetHeight;                             // forcer reflow
+  element.style.transition = "max-height 0.3s ease";
+  element.style.maxHeight = height;                 // ouverture animée
+
+  // Après animation, reset max-height
   element.addEventListener("transitionend", function handler() {
     element.style.maxHeight = "none";
     element.removeEventListener("transitionend", handler);
@@ -89,23 +93,26 @@ function slideDown(element) {
 
 function slideUp(element) {
   if (!element) return;
-  element.style.maxHeight = element.scrollHeight + "px"; // hauteur actuelle
-  element.offsetHeight;                                  // force reflow
+
+  element.style.maxHeight = element.scrollHeight + "px"; // départ ouvert
+  element.offsetHeight;                                  // forcer reflow
   element.style.transition = "max-height 0.3s ease";
-  element.style.maxHeight = "0";                         // anime fermeture
+  element.style.maxHeight = "0";                         // fermeture animée
 
   element.addEventListener("transitionend", function handler() {
-    element.style.display = "none"; // cache après fermeture
+    element.style.display = "none"; // cacher après animation
     element.removeEventListener("transitionend", handler);
   });
 }
 
+
 // ======================================================
-// 🔹 Galerie produit (image principale + miniatures)
+// 🔹 4. Galerie produit (image principale + miniatures)
 // ======================================================
 function initProductGallery() {
-  const galerie = document.querySelector(".images_secondaires .track");
-  const mainImage = document.querySelector(".image_principale img");
+  const galerie   = document.querySelector(".images_secondaires .track"); // conteneur des miniatures
+  const mainImage = document.querySelector(".image_principale img");      // image principale
+
   if (!galerie || !mainImage) return;
 
   // ✅ Clic sur miniature => met en image principale
@@ -115,10 +122,10 @@ function initProductGallery() {
     thumb.addEventListener("click", () => {
       if (!thumbImg) return;
 
-      // Sauvegarde des sources
-      const oldSrc = mainImage.getAttribute("src");
+      // Sauvegarde des sources actuelles
+      const oldSrc    = mainImage.getAttribute("src");
       const oldSrcset = mainImage.getAttribute("srcset");
-      const newSrc = thumbImg.getAttribute("src");
+      const newSrc    = thumbImg.getAttribute("src");
       const newSrcset = thumbImg.getAttribute("srcset");
 
       // ⚡ Swap (échange image principale <-> miniature)

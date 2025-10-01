@@ -1,8 +1,32 @@
 <?php
-
 /**
  * Template Name: Page Contact
  */
+
+// === Traitement du formulaire ===
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_contact'])) {
+    // Sécurisation des champs
+    $nom     = sanitize_text_field($_POST['nom']);
+    $prenom  = sanitize_text_field($_POST['prenom']);
+    $email   = sanitize_email($_POST['email']);
+    $message = sanitize_textarea_field($_POST['message']);
+
+    // Destinataire : l’admin WordPress (tu peux changer si besoin)
+    $to      = get_option('admin_email');
+    $subject = "Nouveau message de contact - {$nom} {$prenom}";
+    $body    = "Nom : $nom\nPrénom : $prenom\nEmail : $email\n\nMessage :\n$message";
+    $headers = [
+        "From: $prenom $nom <$email>",
+        "Reply-To: $email"
+    ];
+
+    // Envoi du mail
+    if (wp_mail($to, $subject, $body, $headers)) {
+        $success_message = "✅ Merci, votre message a bien été envoyé.";
+    } else {
+        $error_message = "❌ Une erreur est survenue. Veuillez réessayer.";
+    }
+}
 
 get_header(); // appelle header.php
 ?>
@@ -26,7 +50,15 @@ get_header(); // appelle header.php
             <img src="<?php echo get_template_directory_uri(); ?>/assets/img/picture_contact.png" alt="Contact">
         </div>
     </div>
+
+    <!-- Formulaire -->
     <div class="formulaire">
+        <?php if (!empty($success_message)) : ?>
+            <p class="success"><?php echo esc_html($success_message); ?></p>
+        <?php elseif (!empty($error_message)) : ?>
+            <p class="error"><?php echo esc_html($error_message); ?></p>
+        <?php endif; ?>
+
         <form action="" method="post">
             <label for="nom">Nom</label>
             <input type="text" name="nom" id="nom" required>
@@ -40,7 +72,7 @@ get_header(); // appelle header.php
             <label for="message">Message</label>
             <textarea name="message" id="message" cols="30" rows="10" required></textarea>
 
-            <!-- Champ caché pour savoir que c’est ce formulaire -->
+            <!-- Champ caché pour identifier le formulaire -->
             <input type="hidden" name="form_contact" value="1">
 
             <input class="bouton" type="submit" value="Envoyer">
@@ -48,5 +80,4 @@ get_header(); // appelle header.php
     </div>
 </section>
 
-<?php get_footer(); // appelle footer.php 
-?>
+<?php get_footer(); // appelle footer.php ?>

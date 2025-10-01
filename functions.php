@@ -3,7 +3,9 @@
  * Fonctions principales du thème
  */
 
-// 🔹 Charger les styles et scripts
+/* ==========================================================================
+   1. Chargement des styles et scripts
+   ========================================================================== */
 function montheme_enqueue_assets() {
     // Style principal (style.css à la racine du thème)
     wp_enqueue_style(
@@ -30,18 +32,39 @@ function montheme_enqueue_assets() {
 }
 add_action('wp_enqueue_scripts', 'montheme_enqueue_assets');
 
+// Charger des styles spécifiques WooCommerce
+function mon_theme_enqueue_styles() {
+    // Charger le style global
+    wp_enqueue_style('theme-style', get_stylesheet_uri());
 
-// 🔹 Enregistrer les emplacements de menus
+    // Charger le CSS de la fiche produit uniquement sur les pages produit
+    if (is_product()) {
+        wp_enqueue_style(
+            'product-sheet-style',
+            get_stylesheet_directory_uri() . '/assets/css/single-product.css',
+            array('theme-style'),
+            filemtime(get_stylesheet_directory() . '/assets/css/single-product.css') // version dynamique pour vider le cache
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'mon_theme_enqueue_styles');
+
+
+/* ==========================================================================
+   2. Enregistrement des menus
+   ========================================================================== */
 function montheme_register_menus() {
     register_nav_menus( array(
-        'primary' => __( 'Menu principal', 'monthemeperso' ), // menu du header
-        'footer'  => __( 'Menu pied de page', 'monthemeperso' ) // menu du footer
+        'primary' => __( 'Menu principal', 'monthemeperso' ), // Menu du header
+        'footer'  => __( 'Menu pied de page', 'monthemeperso' ) // Menu du footer
     ) );
 }
 add_action( 'after_setup_theme', 'montheme_register_menus' );
 
 
-// 🔹 Activer certaines fonctionnalités utiles de WordPress
+/* ==========================================================================
+   3. Activation des fonctionnalités natives WordPress
+   ========================================================================== */
 function montheme_theme_supports() {
     // Balises <title> dynamiques
     add_theme_support( 'title-tag' );
@@ -58,12 +81,40 @@ function montheme_theme_supports() {
     add_theme_support( 'post-thumbnails' );
 
     // Support HTML5 pour certains éléments
-    add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption' ) );
+    add_theme_support( 'html5', array(
+        'search-form', 'comment-form', 'comment-list', 'gallery', 'caption'
+    ) );
 }
 add_action( 'after_setup_theme', 'montheme_theme_supports' );
 
+// Définir une taille d’image personnalisée
+add_action('after_setup_theme', function() {
+    add_image_size('personnalise', 1200, 400, true); // largeur 1200px, hauteur 400px, crop forcé
+});
 
-// 🔹 Traitement du formulaire contact en dur
+
+/* ==========================================================================
+   4. Compatibilité WooCommerce
+   ========================================================================== */
+function mon_theme_add_woocommerce_support() {
+    add_theme_support( 'woocommerce' );
+}
+add_action( 'after_setup_theme', 'mon_theme_add_woocommerce_support' );
+
+// Rafraîchir le compteur panier en AJAX
+add_filter( 'woocommerce_add_to_cart_fragments', 'refresh_cart_count_ajax' );
+function refresh_cart_count_ajax( $fragments ) {
+    ob_start(); ?>
+        <span class="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
+    <?php
+    $fragments['.cart-count'] = ob_get_clean();
+    return $fragments;
+}
+
+
+/* ==========================================================================
+   5. Traitement du formulaire de contact (en dur)
+   ========================================================================== */
 function montheme_traitement_formulaire() {
     if ( isset($_POST['form_contact']) ) {
         
@@ -94,42 +145,3 @@ function montheme_traitement_formulaire() {
     }
 }
 add_action('wp_head', 'montheme_traitement_formulaire');
-
-
-// 🔹 Définir une taille pour le premier article mis en avant
-add_action('after_setup_theme', function() {
-    add_image_size('personnalise', 1200, 400, true); // largeur 1200px, hauteur 400px, crop forcé
-});
-
-function mon_theme_add_woocommerce_support() {
-    add_theme_support( 'woocommerce' );
-}
-add_action( 'after_setup_theme', 'mon_theme_add_woocommerce_support' );
-
-
-function mon_theme_enqueue_styles() {
-    // Charger le style global
-    wp_enqueue_style('theme-style', get_stylesheet_uri());
-
-    // Charger le CSS de la fiche produit uniquement sur les pages produit
-    if (is_product()) {
-        wp_enqueue_style(
-            'product-sheet-style',
-            get_stylesheet_directory_uri() . '/assets/css/single-product.css',
-            array('theme-style'), // dépend du style global
-            filemtime(get_stylesheet_directory() . '/assets/css/single-product.css') // version auto = clear cache
-        );
-    }
-}
-add_action('wp_enqueue_scripts', 'mon_theme_enqueue_styles');
-
-// Rafraîchir le compteur panier en AJAX
-add_filter( 'woocommerce_add_to_cart_fragments', 'refresh_cart_count_ajax' );
-function refresh_cart_count_ajax( $fragments ) {
-    ob_start();
-    ?>
-    <span class="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
-    <?php
-    $fragments['.cart-count'] = ob_get_clean();
-    return $fragments;
-}

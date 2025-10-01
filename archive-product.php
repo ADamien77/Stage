@@ -2,32 +2,40 @@
 /**
  * Template personnalisé WooCommerce : Archive / Catégorie produit
  * 
- * - Gère l'affichage de la boutique et des catégories produits
- * - Redirige la catégorie "tout-voir" vers la boutique
- * - Affiche les produits avec image, titre, avis, extrait, prix et bouton
+ * Ce template gère :
+ * - L'affichage de la boutique et des catégories produits
+ * - La redirection de la catégorie "tout-voir" vers la boutique
+ * - L'affichage des produits avec : image, titre, avis, extrait, prix et bouton
  */
 
 defined( 'ABSPATH' ) || exit; // Sécurité : empêche l'accès direct au fichier
 
-// --------------------------------------------------
-// 🔹 Redirection de la catégorie "tout-voir" vers la boutique
-// --------------------------------------------------
+
+/* ======================================================
+   🔹 Redirection de la catégorie "tout-voir" vers la boutique
+   ====================================================== */
 if ( is_product_category( 'tout-voir' ) ) {
     wp_safe_redirect( get_permalink( wc_get_page_id( 'shop' ) ) );
     exit;
 }
 
-// Appelle le header du thème (header.php)
+
+/* ======================================================
+   🔹 Header du thème
+   ====================================================== */
 get_header();
 ?>
 
 <section class="products">
-  <!-- Titre principal avec séparateurs -->
+
+  <!-- ======================================================
+       🔹 Titre principal avec séparateurs
+       ====================================================== -->
   <div class="title">
     <div class="separateur"></div>
     <h1>
       <?php
-      // Titre dynamique selon le contexte
+      // Titre dynamique selon le contexte de la page
       if ( is_shop() ) {
         // Page Boutique
         echo get_the_title( wc_get_page_id( 'shop' ) );
@@ -35,7 +43,7 @@ get_header();
         // Page catégorie produit
         single_term_title();
       } else {
-        // Cas fallback (ex. autre archive)
+        // Fallback (autres archives, ex. recherche produit)
         the_title();
       }
       ?>
@@ -43,19 +51,14 @@ get_header();
     <div class="separateur"></div>
   </div>
 
+
+  <!-- ======================================================
+       🔹 Boucle produits WooCommerce
+       ====================================================== -->
   <div class="cards">
-    <?php
-    // --------------------------------------------------
-    // 🔹 Boucle WooCommerce : affiche les produits
-    // --------------------------------------------------
-    if ( have_posts() ) :
+    <?php if ( have_posts() ) : ?>
 
-      // Debug facultatif : nombre de produits trouvés
-      // echo '<p>Produits trouvés : ' . $wp_query->found_posts . '</p>';
-
-      while ( have_posts() ) : the_post();
-        global $product; // Objet WC_Product courant
-        ?>
+      <?php while ( have_posts() ) : the_post(); global $product; ?>
         
         <div class="card">
           
@@ -93,17 +96,18 @@ get_header();
 
         </div><!-- /.card -->
 
-        <?php
-      endwhile;
+      <?php endwhile; ?>
 
-    else :
-      // Aucun produit trouvé
-      echo "<p>Aucun produit trouvé</p>";
-    endif;
-    ?>
+    <?php else : ?>
+      <!-- Aucun produit trouvé -->
+      <p>Aucun produit trouvé</p>
+    <?php endif; ?>
   </div><!-- /.cards -->
+
 </section>
 
 <?php
-// Appelle le footer du thème (footer.php)
+/* ======================================================
+   🔹 Footer du thème
+   ====================================================== */
 get_footer();
