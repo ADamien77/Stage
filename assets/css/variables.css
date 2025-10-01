@@ -1,0 +1,41 @@
+/* 🎨 Variables globales (couleurs, tailles, espacements, typographie) */
+:root {
+  /* Couleurs principales */
+  --color-primary: #8B5A2B;
+  --color-primary-hover: #A0522D;
+  --color-primary-active: #5C3C1D;
+  --color-secondary: #2C3E50;
+  --color-neutral: #FFFAF3;
+  --color-white: #ffffff;
+  --color-text: #000000;
+
+  /* Espacements */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 3rem;
+  --spacing-xl: 5rem;
+
+  /* Dimensions */
+  --header-height: 8.5rem;
+  --input-radius: 25px;
+
+  /* Effets */
+  --shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
+
+  /* Bordures radiuses */
+  --radius-15: 15px;
+  --radius-20: 20px;
+
+  /* Fonts */
+  --font-size-base: clamp(0.95rem, 1vw + 0.2rem, 1rem); /* ≈ 15px → 16px */
+  --font-size-lg: clamp(1rem, 1.2vw, 1.125rem); /* ≈ 16px → 18px */
+  --font-size-h5: clamp(1rem, 1.3vw, 1.15rem); /* ≈ 16px → 18px */
+  --font-size-h4: clamp(1.1rem, 1.5vw, 1.25rem); /* ≈ 18px → 20px */
+  --font-size-h3: clamp(1.2rem, 2vw, 1.5rem); /* ≈ 19px → 24px */
+  --font-size-h2: clamp(1.5rem, 2.5vw, 1.75rem); /* ≈ 24px → 28px */
+  --font-size-h1: clamp(1.75rem, 3vw, 2rem); /* ≈ 28px → 32px */
+
+/* Typographie */
+  --font-family: Arial, sans-serif;
+}

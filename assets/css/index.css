@@ -1,0 +1,665 @@
+/* ===================================
+   🎨 VARIABLES DE TYPOGRAPHIE
+   =================================== */
+:root {
+  /* Typographie responsive avec clamp() */
+  --font-size-base: clamp(0.95rem, 1vw + 0.2rem, 1rem); /* Texte standard ≈16px */
+  --font-size-lg: clamp(1rem, 1.2vw, 1.125rem);         /* Texte légèrement plus grand ≈18px */
+  --font-size-h5: clamp(1rem, 1.3vw, 1.15rem);          /* Titres petits ≈18px */
+  --font-size-h4: clamp(1.1rem, 1.5vw, 1.25rem);        /* Sous-titres ≈20px */
+  --font-size-h3: clamp(1.2rem, 2vw, 1.5rem);           /* Titres de cartes ≈24px */
+  --font-size-h2: clamp(1.4rem, 2.5vw, 2rem);           /* Titres de section ≈28px */
+  --font-size-h1: clamp(1.75rem, 3vw, 2.5rem);          /* Titre principal ≈32px */
+
+  /* Police globale */
+  --font-family: Arial, sans-serif;
+}
+
+
+/* ===================================
+   🖼️ SECTION HERO
+   =================================== */
+.hero {
+  /* Dégradé translucide + image de fond */
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.9)
+    ),
+    url("../img/background-hero.jpg") center/cover no-repeat;
+  overflow: hidden;
+  position: relative;
+  height: 85vh;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* ----- Titre principal positionné en haut à droite ----- */
+.hero .title {
+  position: absolute;
+  top: 20%;
+  right: 10%;
+  width: 45rem;
+  padding: var(--spacing-sm);
+  text-align: center;
+}
+
+.hero .title h1 {
+  display: inline-block;
+  background: 
+    url('../img/fond_header.jpg') top / 100% 10px no-repeat,   /* Bande bois en haut */
+    url('../img/fond_header.jpg') bottom / 100% 10px no-repeat,/* Bande bois en bas */
+    #ffffff85; /* Fond blanc */
+  border-radius: 20px;
+  padding: var(--spacing-sm) var(--spacing-sm);
+  line-height: var(--spacing-md);
+
+  /* Utilisation de la variable de titre principal */
+  font-size: var(--font-size-h1);
+  font-weight: bold;
+
+  box-shadow: 5px 5px 6px rgba(0,0,0,0.5);
+}
+
+/* ----- Bouton call-to-action en bas à gauche ----- */
+.hero .button {
+  position: absolute;
+  bottom: 10rem;
+  left: 12%;
+}
+
+.hero .button button {
+  padding: 2rem;
+  border: none;
+  border-radius: var(--radius-15);
+  background: linear-gradient(90deg, var(--Accent, #e67e22) 0%, #804613 100%);
+  color: white;
+
+  /* Police bouton */
+  font-size: var(--font-size-h4);
+  font-weight: bold;
+
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: background-color 0.3s ease;
+}
+
+.hero .button button:hover {
+  background-color: #a0522d;
+}
+
+
+/* ===================================
+   📝 SECTION PRÉSENTATION
+   =================================== */
+.presentation .text {
+  padding: var(--spacing-md) var(--spacing-xl);
+  text-align: justify;
+}
+
+.presentation .text h2 {
+  /* Titre section présentation */
+  font-size: var(--font-size-h2);
+  margin-bottom: var(--spacing-md);
+}
+
+.presentation .text p {
+  /* Texte de présentation */
+  line-height: var(--spacing-md);
+  font-size: var(--font-size-base);
+}
+
+/* ----- Grille de cartes ----- */
+.presentation .cards {
+  display: flex;
+  justify-content: space-evenly;
+  padding: var(--spacing-md) var(--spacing-xl);
+}
+
+/* Styles communs aux cartes */
+.presentation .cards .card_1,
+.presentation .cards .card_2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  width: 40%;
+  height: 40vh;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-20);
+  background-color: var(--color-white);
+  box-shadow: var(--shadow);
+}
+
+.presentation .cards h3 {
+  /* Titres des cartes */
+  font-size: var(--font-size-h3);
+  margin-bottom: var(--spacing-md);
+  position: absolute;
+  top: 12%;
+  left: 10%;
+}
+
+.presentation .cards a {
+  /* Boutons des cartes */
+  position: absolute;
+  bottom: 12%;
+  right: 10%;
+  padding: var(--spacing-sm) var(--spacing-xl);
+  border: 5px solid var(--color-secondary);
+  border-radius: var(--radius-15);
+  background: linear-gradient(90deg, var(--Accent, #e67e22) 0%, #804613 100%);
+  color: white;
+
+  /* Police bouton carte */
+  font-size: var(--font-size-base);
+
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: background 0.3s ease;
+}
+
+.presentation .cards a:hover {
+  background: var(--color-secondary);
+}
+
+/* ----- Images de fond des cartes ----- */
+.card_1 {
+  background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)),
+    url("../img/jouet_1.jpg") center/cover no-repeat;
+}
+
+.card_2 {
+  background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)),
+    url("../img/couteau_2.jpg") center/cover no-repeat;
+}
+
+
+/* ===================================
+   🆕 SECTION NOUVEAUTÉS
+   =================================== */
+.nouveautes .title {
+  width: 90%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: var(--spacing-lg) auto var(--spacing-sm) auto;
+}
+
+.nouveautes .title h2 {
+  /* Titre section nouveautés */
+  font-size: var(--font-size-h2);
+  margin: var(--spacing-sm) auto; 
+  text-align: center;
+  padding: 0 var(--spacing-md);
+  letter-spacing: var(--spacing-xs);
+}
+
+.nouveautes .title .separateur {
+  height: 10px;
+  background: url("../img/fond_header.jpg") center/cover no-repeat;
+  width: 100%;
+  margin: var(--spacing-lg) auto;
+}
+
+.nouveautes .cards {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--spacing-md) 10rem;
+  background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
+    url("../img/fond_header.jpg") center/cover no-repeat;
+}
+
+.nouveautes .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  width: 25%;
+  min-height: 37rem; 
+  padding: var(--spacing-sm);
+  background-color: var(--color-white);
+  border: 2px solid black;
+  box-shadow: var(--shadow);
+}
+
+.nouveautes .card .image {
+  width: 100%;
+  height: 15rem; 
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.nouveautes .card .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 2px solid black;
+}
+
+.nouveautes .card h3 {
+  /* Titres cartes nouveautés */
+  font-size: var(--font-size-h3);
+  margin: var(--spacing-sm) 0;
+}
+
+.nouveautes .card .avis {
+  margin-bottom: var(--spacing-sm);
+}
+
+.nouveautes .card .description {
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.nouveautes .card .description p {
+  /* Texte description produit */
+  line-height: var(--spacing-md);
+  text-align: justify;
+  font-size: var(--font-size-base);
+}
+
+.nouveautes .card .prix_bouton {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  margin-top: auto; 
+  width: 100%;
+}
+
+.nouveautes .card .prix {
+  /* Prix produit */
+  font-size: var(--font-size-h4);
+  margin-left: 5%;
+}
+
+.nouveautes .card .bouton {
+  display: flex;
+  align-items: center;
+  width: auto; 
+  gap: var(--spacing-sm);
+}
+
+.nouveautes .card a {
+  width: 100%;
+  border: none;
+  border-radius: var(--radius-15);
+  background-color: green;
+  color: white;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  padding: var(--spacing-xs);
+  margin: auto;
+  width: 80%;
+  text-align: center;
+  text-decoration: none;
+
+  /* Police bouton */
+  font-size: var(--font-size-base);
+}
+
+
+/* ===================================
+   💡 SECTION CONSEILS
+   =================================== */
+.conseils .title {
+  width: 90%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: var(--spacing-lg) auto var(--spacing-sm) auto;
+}
+
+.conseils .title h2 {
+  /* Titre section conseils */
+  font-size: var(--font-size-h2);
+  margin: var(--spacing-sm) auto; 
+  text-align: center;
+  padding: 0 var(--spacing-md);
+  letter-spacing: var(--spacing-xs);
+}
+
+.conseils .title .separateur {
+  height: 10px;
+  background: url("../img/fond_header.jpg") center/cover no-repeat;
+  margin: var(--spacing-lg) auto;
+}
+
+.conseils .conseil {
+  margin-bottom: var(--spacing-lg);
+  padding: 0 var(--spacing-xl);
+}
+
+.conseils .conseil h3 {
+  /* Titres conseils */
+  font-size: var(--font-size-h3);
+  margin-bottom: var(--spacing-sm);
+}
+
+.conseils .conseil p {
+  /* Texte conseils */
+  line-height: var(--spacing-md);
+  text-align: justify;
+  font-size: var(--font-size-base);
+}
+
+.conseils .button {
+  display: flex;
+  justify-content: center;
+  width: 20%;
+  margin: auto auto var(--spacing-lg);
+}
+
+.conseils button {
+  width: 100%;
+  border: none;
+  border-radius: var(--radius-15);
+
+  /* Police bouton */
+  font-size: var(--font-size-h4);
+  font-weight: 600;
+
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)),
+    url("../img/fond_header.jpg") center/cover no-repeat;
+}
+
+
+/* ===================================
+   💬 SECTION TÉMOIGNAGES
+   =================================== */
+.mur_temoignages .title {
+  width: 90%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: var(--spacing-lg) auto var(--spacing-sm) auto;
+}
+
+.mur_temoignages .title h2 {
+  /* Titre section témoignages */
+  font-size: var(--font-size-h2);
+  margin: var(--spacing-sm) auto; 
+  text-align: center;
+  padding: 0 var(--spacing-md);
+  letter-spacing: var(--spacing-xs);
+}
+
+.mur_temoignages .title .separateur {
+  height: 10px;
+  background: url("../img/fond_header.jpg") center/cover no-repeat;
+  margin: var(--spacing-lg) auto;
+}
+
+.mur_temoignages .temoignages {
+  width: 70%;
+  margin: auto auto var(--spacing-lg);
+}
+
+.mur_temoignages .temoignages .card {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: var(--spacing-lg);
+  border: 2px solid black;
+  border-radius: var(--radius-15);
+  box-shadow: var(--shadow);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
+    url("../img/fond_header.jpg") center/cover no-repeat;
+}
+
+.mur_temoignages .temoignages .card .image img {
+  width: 12rem;
+  height: 12rem;
+  border-radius: 50%;
+  margin: var(--spacing-sm);
+}
+
+.mur_temoignages .temoignages .card .text {
+  width: 100%;
+  padding: 0 var(--spacing-lg);
+  text-align: justify;
+  line-height: var(--spacing-md);
+}
+
+.mur_temoignages .temoignages .card .text h3 {
+  /* Nom client */
+  font-size: var(--font-size-h3);
+  margin-bottom: var(--spacing-md);
+}
+
+.mur_temoignages .temoignages .card .text .avis {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.mur_temoignages .temoignages .card .text p {
+  /* Texte témoignage */
+  line-height: var(--spacing-md);
+  text-align: justify;
+  font-size: var(--font-size-base);
+}
+
+/* ===================================
+   📱 RESPONSIVITÉ
+   =================================== */
+
+/* ----- Écrans larges (max 1300px) ----- */
+@media screen and (max-width: 1300px) {
+  .nouveautes .cards {
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: var(--spacing-md) 3rem;
+  }
+  
+  .nouveautes .card {
+    width: 45%;
+    height: auto;
+  }
+}
+
+
+/* ----- Tablettes (max 1024px) ----- */
+@media screen and (max-width: 1024px) {
+  .hero {
+    height: 70vh;
+    padding: 1.5rem;
+  }
+
+  .hero .title {
+    width: 80%;
+    right: 5%;
+    top: 15%;
+  }
+
+  .hero .button {
+    bottom: 6rem;
+    left: 8%;
+  }
+
+  /* Présentation : les cartes passent en colonne */
+  .presentation .cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .presentation .cards .card_1,
+  .presentation .cards .card_2 {
+    width: 80%;
+    height: 20rem;
+  }
+
+  /* Nouveautés : cartes plus serrées */
+  .nouveautes .cards {
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: var(--spacing-md) 3rem;
+  }
+
+  .nouveautes .card {
+    width: 45%;
+    height: auto;
+  }
+
+  /* Prix et bouton empilés */
+  .nouveautes .card .prix_bouton {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  .nouveautes .card .prix_bouton .bouton {
+    width: 100%;
+    margin: var(--spacing-sm) var(--spacing-lg);
+  }
+
+  .conseils .button {
+    width: 40%;
+  }
+
+  .mur_temoignages .temoignages {
+    width: 90%;
+  }
+}
+
+
+/* ----- Mobiles (max 768px) ----- */
+@media screen and (max-width: 768px) {
+  .hero {
+    display: flex;
+    flex-direction: column-reverse; /* 🔄 Inverse l’ordre : bouton en dessous */
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+    height: auto; /* S’adapte au contenu */
+    padding: 2rem 1rem;
+  }
+
+  /* Titre et bouton centrés */
+  .hero .title,
+  .hero .button {
+    position: static;
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero .button button {
+    padding: var(--spacing-sm);
+  } 
+
+  /* Présentation */
+  .presentation {
+    padding: var(--spacing-sm);
+    margin: auto;
+  }
+
+  .presentation .text {
+    padding: var(--spacing-sm);
+  }
+
+  .presentation .cards {
+    padding: var(--spacing-xs);
+  }
+
+  .presentation .cards .card_1,
+  .presentation .cards .card_2 {
+    width: 100%;
+    height: 20rem;
+  }
+
+  /* Nouveautés en colonne */
+  .nouveautes .cards {
+    flex-direction: column;
+    padding: var(--spacing-md);
+  }
+
+  .nouveautes .card {
+    width: 70%;
+    height: auto;
+    margin: auto;
+  }
+
+  .nouveautes .card .prix_bouton {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 5rem 0;
+  }
+
+  .nouveautes .card .prix_bouton .bouton {
+    width: 100%;
+  }
+
+  /* Conseils */
+  .conseils .conseil {
+    margin-bottom: var(--spacing-lg);
+    padding: 0 var(--spacing-md);
+  }
+
+  /* Témoignages : cartes empilées */
+  .mur_temoignages .temoignages {
+    width: 70%;
+  }
+
+  .mur_temoignages .temoignages .card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .mur_temoignages .temoignages .card .image img {
+    width: 8rem;
+    height: 8rem;
+  }
+
+  .mur_temoignages .temoignages .card .text {
+    padding: var(--spacing-sm);
+  }
+}
+
+/* ----------RESPONSIVITE ------------ */
+
+/* ----- Petits écrans (max 480px) ----- */
+@media screen and (max-width: 480px) {
+  .hero .title h1 {
+    font-size: var(--font-size-h2); /* ✅ réduit uniquement sur mobile */
+  }
+
+  .hero .button button {
+    padding: 1rem;
+  }
+
+  /* Présentation */
+  .presentation .cards .card_1,
+  .presentation .cards .card_2 {
+    width: 100%;
+  }
+
+  .presentation .cards .card_1 a,
+  .presentation .cards .card_2 a {
+    padding: var(--spacing-xs) var(--spacing-lg);
+  }
+
+  /* Titre des sections réduit volontairement */
+  .nouveautes h2,
+  .conseils h2,
+  .mur_temoignages h2 {
+    font-size: var(--font-size-h3); /* ✅ réduit uniquement sur mobile */
+  }
+
+  .nouveautes .card {
+    width: 100%;
+  }
+
+  .conseils .button {
+    width: 80%;
+  }
+}

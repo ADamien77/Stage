@@ -1,0 +1,21 @@
+/* Styles globaux */
+@import "./reset.css";    /* si tu as un reset */
+@import "./header.css";
+@import "./footer.css";
+@import "./index.css";
+@import "./archive-product.css";
+@import "./about.css";
+@import "./blog.css";
+@import "./contact.css";
+@import "./variables.css";
+@import "./single-product.css";
+@import "./searchform.css";
+@import "./single-post.css";
+/* ajoute ici les autres fichiers CSS de ton projet */
+
+/* Tu peux aussi mettre des styles globaux de base */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #fdfdfd;
+  color: #333;
+}

@@ -1,0 +1,13 @@
+/* 🔄 Reset basique pour harmoniser le rendu entre navigateurs */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  background-color: var(--color-neutral);
+}

@@ -1,0 +1,404 @@
+/* ===============================
+   📌 MENU DE LA FICHE PRODUIT
+   =============================== */
+.woocommerce .woocommerce-breadcrumb {
+   width: 100%;
+  margin: var(--spacing-xs) var(--spacing-xl);
+}
+
+/* ===============================
+   📌 BLOC PRINCIPAL DE LA FICHE PRODUIT
+   =============================== */
+.product_sheet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+
+  width: 90%;
+  margin: var(--spacing-md) auto;
+
+  background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
+              url("../img/fond_bois_article_blog.jpg") center/cover no-repeat;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* ===============================
+   📌 CONTENU PRINCIPAL : IMAGES + DESCRIPTION
+   =============================== */
+.product_sheet .contenu {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+  width: 100%;
+}
+
+/* ===============================
+   📷 COLONNE IMAGES PRODUIT
+   =============================== */
+.product_sheet .contenu .images {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+
+  width: 40%;
+  margin: var(--spacing-md);
+}
+
+/* ✅ Image principale (cadre fixe) */
+.image_principale {
+  width: 400px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.image_principale img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* conserve le ratio et rogne si besoin */
+}
+
+/* ✅ Galerie secondaire */
+.images_secondaires {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.images_secondaires .track {
+  display: flex;
+  gap: var(--spacing-md);
+  overflow-x: auto; /* scroll horizontal si + d’images */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* fluidité mobile */
+}
+
+/* Miniatures homogènes */
+.images_secondaires .thumb {
+  flex: 0 0 80px;
+  height: 80px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  cursor: pointer;
+
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.images_secondaires .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.images_secondaires .thumb:hover img {
+  transform: scale(1.1);
+}
+
+/* ===============================
+   📝 COLONNE DESCRIPTION PRODUIT
+   =============================== */
+.product_sheet .contenu .description {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  width: 50%;
+}
+
+.product_sheet .contenu .description p {
+  text-align: justify;
+  margin-right: var(--spacing-sm);
+  line-height: var(--spacing-md);
+}
+
+/* ✅ Avis */
+.description .avis {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+
+/* ===============================
+   ⭐ Style étoiles WooCommerce
+   =============================== */
+.star-rating {
+  font-size: 1.5rem;       /* taille des étoiles */
+  line-height: 1;
+  position: relative;
+  display: inline-block;
+  font-family: "WooCommerce", "Arial", sans-serif;
+  width: 6.4em;            /* largeur fixe */
+  height: 1em;
+  overflow: hidden;
+}
+
+.star-rating::before {
+  content: "★★★★★";        /* étoiles vides */
+  color: #ccc;             /* gris pour vide */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.star-rating span::before {
+  content: "★★★★★";        /* étoiles pleines */
+  color: gold;             /* doré pour rempli */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* ✅ Prix + bouton panier */
+.description .prix_bouton {
+
+  margin-top: 10rem; /* au lieu de auto */
+  padding: var(--spacing-md); /* espace interne pour respirer */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.description .prix_bouton p {
+  font-weight: bold;
+  font-size: var(--font-size-h3);
+  margin-left: var(--spacing-xl);
+}
+
+.description .prix_bouton button,
+.description .prix_bouton a {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--color-white);
+  background-color: green;
+  border-radius: 10px;
+  padding: 1rem 2rem;
+  margin: var(--spacing-sm);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.description .prix_bouton button:hover,
+.description .prix_bouton a:hover {
+  background-color: var(--color-secondary);
+}
+
+/* ===============================
+   ℹ️ INFOS COMPLÉMENTAIRES
+   =============================== */
+.product_sheet .info_complementaire {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+
+  width: 60%;
+  margin: var(--spacing-md) auto;
+  padding: var(--spacing-md);
+
+  background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)),
+              url("/images/fond_header.jpg") center/cover no-repeat;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.info_complementaire h2 {
+  width: 100%;
+  text-align: center;
+}
+
+.info_complementaire .contenu_complementaire {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  position: relative;
+}
+
+.info_complementaire .contenu_complementaire p {
+  text-align: justify;
+  margin-right: var(--spacing-sm);
+  line-height: var(--spacing-md);
+}
+
+.info_complementaire .contenu_complementaire .separateur_product_sheet {
+  border: 3px solid black;
+  position: absolute;
+  margin-left: 45%;
+  width: 1px;
+  height: 100%;
+}
+
+.info_complementaire .contenu_complementaire .contenu_1,
+.info_complementaire .contenu_complementaire .contenu_2 {
+  width: 50%;
+}
+
+.info_complementaire .contenu_complementaire .contenu_2 {
+  margin-left: var(--spacing-lg);
+}
+
+/* ===============================
+   📱 Tablette (768px – 1024px)
+   =============================== */
+@media (max-width: 1024px) {
+  .menu_product_sheet p {
+    margin-left: var(--spacing-lg);
+    margin-bottom: -1rem;
+  }
+
+  /* Contenu principal en colonne */
+  .product_sheet .contenu {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+
+  /* Bloc images */
+  .product_sheet .contenu .images {
+    width: 70%;
+    margin: auto;
+  }
+
+  .image_principale {
+    width: 100%;
+    height: auto;
+  }
+
+  .images_secondaires {
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+
+  /* Bloc description */
+  .product_sheet .contenu .description {
+    width: 80%;
+    margin: auto;
+    gap: var(--spacing-md);
+  }
+
+  .description .prix_bouton {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+
+  .description .prix_bouton button,
+  .description .prix_bouton a {
+    width: 48%;
+  }
+
+  /* Infos complémentaires : une seule colonne */
+  .product_sheet .info_complementaire {
+    width: 85%;
+    padding: var(--spacing-md);
+  }
+
+  .info_complementaire .contenu_complementaire {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .info_complementaire .contenu_complementaire .contenu_1,
+  .info_complementaire .contenu_complementaire .contenu_2 {
+    width: 100%;
+  }
+
+  .info_complementaire .contenu_complementaire .separateur_product_sheet {
+    display: none;
+  }
+}
+
+
+/* ===============================
+   📱 Mobile (≤767px)
+   =============================== */
+@media (max-width: 767px) {
+  /* Contenu principal */
+  .product_sheet .contenu {
+    flex-direction: column;
+    width: 100%;
+    gap: var(--spacing-sm);
+  }
+
+  .product_sheet .contenu .images {
+    width: 95%;
+    margin: auto;
+  }
+
+  .image_principale {
+    width: 100%;
+    max-height: 300px;
+  }
+
+  .images_secondaires {
+    width: 100%;
+    gap: var(--spacing-sm);
+  }
+
+  .product_sheet .contenu .description {
+    width: 95%;
+    margin: auto;
+    gap: var(--spacing-sm);
+  }
+
+  .description .prix_bouton {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-sm);
+    margin: var(--spacing-sm) auto;
+    width: 100%;
+  }
+
+  .description .prix_bouton p {
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .description .prix_bouton button,
+  .description .prix_bouton a {
+    width: 100%;
+    margin: 0;
+  }
+
+  /* Bloc infos complémentaires */
+  .product_sheet .info_complementaire {
+    width: 95%;
+    padding: var(--spacing-sm);
+  }
+
+  .info_complementaire h2 {
+    font-size: 1.2rem;
+  }
+
+  .info_complementaire .contenu_complementaire {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .info_complementaire .contenu_complementaire .contenu_1,
+  .info_complementaire .contenu_complementaire .contenu_2 {
+    width: 100%;
+  }
+
+  .info_complementaire .contenu_complementaire .separateur_product_sheet {
+    display: none;
+  }
+}

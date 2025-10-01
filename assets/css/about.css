@@ -1,0 +1,257 @@
+/* ===============================
+   🌲 SÉPARATEUR VISUEL (effet bois)
+   =============================== */
+.separateur {
+  width: 50%; /* Largeur du séparateur */
+  height: 10px; /* Épaisseur */
+  background-image: url('/images/fond_header.jpg'); /* Texture bois */
+  margin: var(--spacing-lg) auto; /* Centré avec marge verticale */
+}
+
+
+/* ===============================
+   🏷️ TITRE DE SECTION
+   =============================== */
+.title_about {
+  width: 100%;
+  text-align: center; /* Centre le texte */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title_about h1 {
+  /* Gros titre des sections (ex: témoignages) */
+  font-size: clamp(1.5rem, 2vw, 2.2rem); /* Taille responsive */
+  margin: var(--spacing-sm) auto; 
+  text-align: center;
+  padding: 0 var(--spacing-sm);
+}
+
+.title_about .separateur {
+  /* Ligne décorative sous le titre */
+  height: 10px;
+  background: url("../img/fond_header.jpg") center/cover no-repeat;
+  margin: var(--spacing-lg) auto;
+}
+
+
+/* ===============================
+   👥 QUI SOMMES-NOUS
+   =============================== */
+.qui_sommes_nous {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 var(--spacing-lg) var(--spacing-xl);
+  gap: var(--spacing-md); /* Espacement entre texte et image */
+}
+
+/* --- Texte --- */
+.qui_sommes_nous .contenu {
+  width: 50%; /* Moitié de l’espace */
+  display: flex;
+  flex-direction: column;
+}
+
+.qui_sommes_nous .contenu h2 {
+  font-size: var(--font-size-h2);
+  margin-bottom: var(--spacing-md);
+  text-decoration: underline;
+}
+
+.qui_sommes_nous .contenu p {
+  line-height: var(--spacing-md);
+  text-align: justify; /* Alignement bloc type article */
+}
+
+/* --- Image --- */
+.qui_sommes_nous .image {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.qui_sommes_nous .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Remplir le conteneur sans déformation */
+}
+
+
+/* ===============================
+   📖 NOTRE HISTOIRE
+   =============================== */
+.notre_histoire {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 var(--spacing-lg) var(--spacing-xl);
+  gap: var(--spacing-md);
+}
+
+.notre_histoire h2 {
+  font-size: var(--font-size-h2);
+  margin-bottom: var(--spacing-md);
+  text-decoration: underline;
+}
+
+.notre_histoire .contenu p {
+  line-height: var(--spacing-md);
+  text-align: justify;
+}
+
+
+/* ===============================
+   🏪 NOTRE BOUTIQUE
+   =============================== */
+.notre_boutique {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 var(--spacing-lg) var(--spacing-xl);
+  gap: var(--spacing-md);
+}
+
+/* --- Texte --- */
+.notre_boutique .contenu {
+  width: 80%; /* Texte prend + de place */
+  display: flex;
+  flex-direction: column;
+}
+
+.notre_boutique h2 {
+  font-size: var(--font-size-h2);
+  margin-bottom: var(--spacing-md);
+  text-decoration: underline;
+}
+
+.notre_boutique .contenu p {
+  line-height: var(--spacing-md);
+  text-align: justify;
+}
+
+/* --- Bouton --- */
+.notre_boutique .bouton {
+  width: 20%; /* Moins large que le texte */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notre_boutique .bouton a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  background-color: var(--color-primary);
+  color: #fff;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: 20px;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  border: var(--color-secondary) 5px solid;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.notre_boutique .bouton a:hover {
+  background-color: var(--color-secondary); /* Inversion au survol */
+}
+
+
+/* ===============================
+   📩 CONTACT
+   =============================== */
+.contact_about {
+  display: flex;
+  flex-direction: column; /* Organisation verticale */
+  justify-content: center;
+  align-items: center;
+  margin: 0 var(--spacing-lg) var(--spacing-lg);
+  gap: var(--spacing-md);
+}
+
+/* --- Texte --- */
+.contact_about .contenu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact_about h2 {
+  font-size: var(--font-size-h2);
+  margin-bottom: var(--spacing-md);
+  text-decoration: underline;
+}
+
+.contact_about p {
+  line-height: var(--spacing-md);
+  text-align: justify;
+}
+
+/* --- Bouton --- */
+.contact_about .bouton {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact_about .bouton a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  background-color: var(--color-primary);
+  color: #fff;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: 20px;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  border: var(--color-secondary) 5px solid;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.contact_about .bouton a:hover {
+  background-color: var(--color-secondary);
+}
+
+
+/* ===============================
+   📱 RESPONSIVE
+   =============================== */
+
+/* --- Tablettes & écrans moyens (≤ 1024px) --- */
+@media screen and (max-width: 1024px) {
+  .title_about h1 {
+    max-width: 90%; /* Réduit largeur max du titre */
+  }
+
+  .separateur {
+    width: 70%; /* Séparateur plus large */
+  }
+
+  .qui_sommes_nous {
+    flex-direction: column; /* Texte et image empilés */
+  }
+
+  .qui_sommes_nous .contenu,
+  .qui_sommes_nous .image {
+    width: 100%; /* Prend toute la largeur */
+  }
+}
+
+/* --- Mobiles (≤ 768px) --- */
+@media screen and (max-width: 768px) {
+  .notre_boutique {
+    flex-direction: column; /* Texte au-dessus du bouton */
+  }
+
+  .notre_boutique .contenu,
+  .notre_boutique .bouton {
+    width: 100%; /* Élément par ligne */
+  }
+}

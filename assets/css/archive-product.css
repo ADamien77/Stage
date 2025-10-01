@@ -1,0 +1,155 @@
+/* =======================
+   SECTION PRODUITS
+   ======================= */
+.products { 
+  background: 
+  linear-gradient(rgba(255, 255, 255, 0.5), rgba(255,255,255,0.5)),
+  url("../img/fond_header.jpg") no-repeat center/cover;
+  padding: var(--spacing-xs) 0; /* Espacement vertical */
+}
+
+/* =======================
+   TITRE DE SECTION
+   ======================= */
+.products .title {
+   display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white; /* Fond blanc derrière le titre */
+}
+
+.products .title h1 {
+  /* Titre principal de la section produits */
+  font-size: clamp(1.5rem, 2vw, 2.2rem); /* Taille de police fluide */
+  margin: var(--spacing-sm) auto; 
+  text-align: center;
+  padding: 0 var(--spacing-md);
+}
+
+.products .title .separateur {
+  /* Bande colorée sous le titre */
+  height: 10px;
+  background: url("../img/fond_header.jpg") center/cover no-repeat;
+  margin: var(--spacing-lg) auto;
+}
+
+/* =======================
+   GRILLE DE CARTES PRODUITS
+   ======================= */
+.products .cards {
+  display: grid; /* Mise en grille */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Colonnes adaptatives */
+  gap: var(--spacing-xl); /* Espacement entre les cartes */
+  margin: auto;
+  max-width: 1300px; /* Largeur max de la grille */
+}
+
+/* =======================
+   CARTE PRODUIT
+   ======================= */
+.products .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Titre/description en haut, prix/bouton en bas */
+  min-height: 37rem; 
+  padding: var(--spacing-sm);
+  margin: var(--spacing-sm) auto;
+  background-color: var(--color-white);
+  border: 2px solid black;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease; /* Animation au hover */
+}
+
+.products .card:hover {
+  transform: translateY(-5px); /* Légère élévation de la carte */
+}
+
+/* =======================
+   IMAGE PRODUIT
+   ======================= */
+.products .card .image {
+  height: 15rem; /* Hauteur fixe */
+  overflow: hidden; /* Cache le surplus d’image */
+  flex-shrink: 0; /* Empêche la réduction de la zone image */
+}
+
+.products .card .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Recadrage sans déformation */
+  border: 2px solid black;
+}
+
+/* =======================
+   TITRE + DESCRIPTION
+   ======================= */
+.products .card h3 {
+  font-size: var(--font-size-h3);
+  margin: var(--spacing-sm) 0;
+}
+
+.products .card .description {
+  flex: 1; /* Prend tout l’espace restant entre image et prix */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.products .card .avis {
+  margin-bottom: var(--spacing-sm); /* Marge sous les avis clients */
+}
+
+.products .card .description p {
+  line-height: var(--spacing-md);
+  text-align: justify; /* Texte justifié */
+}
+
+/* =======================
+   PRIX + BOUTON
+   ======================= */
+.products .card .prix_bouton {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  margin-top: auto; /* Fixe la zone en bas de la carte */
+}
+
+.products .card .prix {
+  font-size: var(--font-size-h4);
+  margin-left: 5%;
+}
+
+.products .card .bouton {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.products .card a {
+  border: none;
+  border-radius: var(--radius-15);
+  background-color: green;
+  color: white;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  padding: var(--spacing-xs) 0;
+  margin: auto;
+  font-size: var(--font-size-h4);
+  width: 80%;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.3s ease; /* Animation au hover */
+}
+
+/* =======================
+   RESPONSIVE (max 1300px)
+   ======================= */
+@media screen and (max-width: 1300px) {
+  .products .cards {
+    gap: var(--spacing-xs); /* Réduit l’espacement entre cartes */
+  }
+  .products .card {
+    width: 80%; /* Réduit la largeur des cartes */
+    height: auto; /* Laisse la hauteur s’adapter au contenu */
+  }
+}

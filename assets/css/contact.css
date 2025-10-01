@@ -1,0 +1,125 @@
+/* ===== TITRE DE SECTION ===== */
+.title_contact {
+  /* Conteneur du titre centré */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title_contact h1 {
+  /* Titre responsive centré */
+  font-size: clamp(1.5rem, 2vw, 2.2rem); /* Taille de police fluide */
+  margin: var(--spacing-sm) auto; 
+  text-align: center;
+  padding: 0 var(--spacing-md);
+  width: 25%;
+}
+
+.title_contact .separateur {
+  /* Barre colorée sous le titre */
+  height: 10px;
+  background: url("../img/fond_header.jpg") center/cover no-repeat;
+  margin: var(--spacing-lg) auto;
+}
+
+/* ===== CONTACT ===== */
+.contact {
+  /* Conteneur principal à deux colonnes */
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: var(--spacing-xl);
+  margin: var(--spacing-sm) var(--spacing-lg);
+}
+
+.contact .contenu {
+  /* Colonne texte */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  gap: var(--spacing-sm);
+}
+
+.contact .contenu  .description {
+  /* Description du texte */
+  text-align: justify;
+  line-height: var(--spacing-md);
+  margin: var(--spacing-sm) auto;
+}
+
+.contact .contenu .image {
+  /* Image du texte */
+  margin: 0 auto;
+}
+
+
+.contact .formulaire {
+  position: relative;
+  width: 50%;
+  border: 3px solid black;
+  border-radius: 15px;
+  max-width: 500px;
+  overflow: hidden; /* pour que le rayon du bord s'applique aussi au fond */
+  z-index: 0; /* crée un contexte d'empilement */
+  margin-bottom: var(--spacing-md);
+}
+
+.contact .formulaire::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
+    url("../img/fond_de_bois_1.jpg") center/cover;
+  z-index: -1; /* place le fond derrière le contenu */
+}
+
+
+.contact .formulaire form {
+  /* Mise en forme du formulaire */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-md) var(--spacing-lg);
+}
+
+.contact .formulaire form label {
+  /* Mise en forme des labels */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  font-weight: bold;
+  color: var(--color-black);
+}
+
+/* Bouton d’envoi */
+.contact .formulaire form .bouton {
+  width: 40%;
+  background-color: var(--color-secondary);
+  color: white;
+  cursor: pointer;
+}
+
+.contact .formulaire form .bouton:hover {
+  background-color: var(--color-primary);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  /* Passage en colonne sur tablette */
+  .contact {
+    flex-direction: column;
+  }
+  .contact .contenu,
+  .contact .formulaire {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Ajustements mobile */
+  .title_contact h1 { width: 100%; }
+  .contact { margin: 0 var(--spacing-sm); }
+  .contact .formulaire form .bouton { width: 50%; }
+}

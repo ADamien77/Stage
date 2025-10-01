@@ -1,0 +1,108 @@
+/* ===============================
+   🏷️ SINGLE ARTICLE (single.php)
+   =============================== */
+
+/* Conteneur principal */
+.single-article {
+  width: 90%;
+  margin: 0 auto;
+  padding: var(--spacing-md);
+  font-family: var(--font-family);
+}
+
+/* Titre de l'article */
+.single-article .title_blog {
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.single-article .title_blog h1 {
+  font-size: clamp(1.5rem, 2vw, 2.2rem);
+  margin: var(--spacing-sm) auto;
+  width: 50%;
+}
+
+/* Ligne séparatrice */
+.single-article .title_blog .separateur {
+  height: 10px;
+  background: url("../img/fond_header.jpg") center/cover no-repeat;
+  margin: var(--spacing-lg) auto;
+}
+
+/* ===============================
+   📰 ARTICLE PRINCIPAL
+   =============================== */
+.single-article .article_1 {
+    background-image: url('../img/fond_bois_article_blog.jpg');
+    background-size: cover;
+    border-radius: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    padding: var(--spacing-md);
+    display: block;
+    text-align: justify;
+    overflow: hidden; /* important pour float */
+}
+
+/* Image flottante à gauche */
+.single-article .article_1 .image-centree-magazine {
+    float: left; /* image à gauche */
+    width: 30%;
+    height: 30%;
+    object-fit: cover;
+    margin: 0 var(--spacing-sm) var(--spacing-sm) 0; 
+    border-radius: 20px;
+}
+
+/* Contenu texte */
+.single-article .article_1 .contenu {
+    font-weight: bold;
+    line-height: 1.6;
+}
+
+/* Titres et paragraphes */
+.single-article .article_1 .contenu p,
+.single-article .article_1 .contenu h2,
+.single-article .article_1 .contenu h3 {
+    margin-bottom: var(--spacing-md);
+}
+
+/* ===============================
+   📱 RESPONSIVE DESIGN
+   =============================== */
+@media screen and (max-width: 1024px) {
+  .single-article {
+      margin: 0 auto;
+  }
+  
+    .single-article .article_1 {
+    flex-direction: column; /* image au-dessus du texte */
+    text-align: left;
+  }
+
+  .single-article .article_1 .image-centree-magazine {
+        float: none;
+        display: block;
+        width: 90%;
+        height: auto;
+        margin: var(--spacing-sm) auto;
+    }
+
+    .single-article .title_blog {
+        margin: 0 auto var(--spacing-md) auto;
+    }
+
+    .single-article .title_blog .separateur {
+        margin:0 auto;
+    }
+
+  .single-article .title_blog h1 {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .single-article .article_1 .contenu {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}

@@ -1,0 +1,205 @@
+/* =========================
+   FOOTER - Structure globale
+   ========================= */
+footer {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-top: 3px solid var(--color-primary);
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap; 
+  gap: var(--spacing-lg);
+}
+
+/* =========================
+   LOGO
+   ========================= */
+footer .logo {
+  display: flex;
+  justify-content: center;
+  width: 150px;
+}
+
+footer .logo img {
+  max-width: 100%; 
+  height: auto;
+  width: clamp(8rem, 20vw, 15rem);
+  object-fit: contain;
+}
+
+/* =========================
+   PAGES LÉGALES
+   ========================= */
+footer .pages_legales {
+  display: flex;
+  flex-direction: column;
+}
+
+footer .pages_legales ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+footer .pages_legales ul li {
+  margin-bottom: var(--spacing-sm);
+}
+
+footer .pages_legales ul li a {
+  text-decoration: none;
+  color: var(--color-text);
+  transition: color 0.3s ease;
+}
+
+footer .pages_legales ul li a:hover {
+  color: var(--color-primary);
+}
+
+/* =========================
+   MOYENS DE PAIEMENT
+   ========================= */
+footer .paiement {
+  display: flex;
+  flex-direction: column;
+}
+
+footer .paiement p {
+  margin-bottom: var(--spacing-sm);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+footer .paiement ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+footer .paiement ul li {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+footer .paiement ul li img {
+  width: 2.5rem;
+  height: 1.5rem;
+  margin-left: var(--spacing-sm);
+  object-fit: contain;
+}
+
+footer .paiement ul li a {
+  text-decoration: none;
+  color: var(--color-text);
+  transition: color 0.3s ease;
+}
+
+footer .paiement ul li a:hover {
+  color: var(--color-primary);
+}
+
+/* =========================
+   LIVRAISON & RÉSEAUX SOCIAUX
+   ========================= */
+footer .livraison_reseaux {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+footer .livraison_reseaux .livraison {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+footer .livraison_reseaux .livraison p {
+  margin-bottom: var(--spacing-sm);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+footer .livraison_reseaux .livraison ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+footer .livraison_reseaux .livraison ul li {
+  margin-bottom: var(--spacing-sm);
+}
+
+footer .livraison_reseaux .livraison ul li a {
+  text-decoration: none;
+  color: var(--color-text);
+  transition: color 0.3s ease;
+}
+
+footer .livraison_reseaux .livraison ul li a:hover {
+  color: var(--color-primary);
+}
+
+/* Réseaux sociaux (icônes) */
+footer .livraison_reseaux .reseau {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+}
+
+footer .livraison_reseaux .reseau img {
+  width: 2rem;
+  height: 2rem;
+  margin: var(--spacing-sm);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+footer .livraison_reseaux .reseau img:hover {
+  transform: scale(1.1);
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+   ========================= */
+
+/* Tablette (moins de 1024px) */
+@media (max-width: 1024px) {
+  footer {
+    justify-content: center;
+    gap: var(--spacing-md);
+  }
+
+  footer .logo img {
+    width: clamp(6rem, 25vw, 12rem); 
+  }
+}
+
+/* Mobile (moins de 768px) */
+@media (max-width: 768px) {
+  footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--spacing-lg);
+  }
+
+  footer .logo {
+    margin-right: 0; 
+  }
+
+  footer .logo img {
+    width: clamp(5rem, 40vw, 10rem);
+  }
+
+  footer .pages_legales ul,
+  footer .paiement ul,
+  footer .livraison_reseaux .livraison ul {
+    align-items: center; 
+  }
+}

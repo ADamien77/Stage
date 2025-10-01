@@ -1,0 +1,68 @@
+/* Conteneur global du form */
+.search-form {
+  width: 100%;
+  max-width: 600px; /* adapte selon besoin */
+}
+
+/* wrapper relatif pour positionner le bouton dans l'input */
+.search-field-wrap {
+  position: relative;
+}
+
+/* Champ de recherche */
+.search-input {
+  width: 100%;
+  padding: 12px 48px 12px 16px; /* padding-right pour laisser la place au bouton */
+  font-size: 16px;
+  border-radius: 999px;           /* arrondi pill */
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  background-color: #fff;
+  outline: none;
+}
+
+/* Bouton loupe, positionné à droite, à l'intérieur du champ */
+.search-submit {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  padding: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  line-height: 0;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+}
+
+/* Style de l'icône (sera de la couleur du texte) */
+.search-submit svg {
+  width: 18px;
+  height: 18px;
+  color: #222; /* couleur de la loupe */
+  display: block;
+}
+
+/* Hover / focus pour accessibilité */
+.search-submit:hover,
+.search-submit:focus {
+  background-color: rgba(0,0,0,0.05);
+  outline: none;
+}
+
+/* Optionnel : input focus plus visible */
+.search-input:focus {
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.08);
+  border-color: #aaa;
+}
+
+/* Responsive : si tu veux réduire l'input sur mobile */
+@media (max-width: 480px) {
+  .search-input { padding: 10px 44px 10px 12px; font-size: 15px; }
+  .search-submit { width: 34px; height: 34px; right: 4px; }
+}
