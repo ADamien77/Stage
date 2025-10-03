@@ -64,18 +64,36 @@ if (have_posts()) :
         <div class="description">
           <h1><?php the_title(); ?></h1>
 
-          <!-- ⭐ Avis & étoiles -->
-          <div class="avis">
-            <?php
-            $average = $product->get_average_rating();
-            echo wc_get_rating_html($average ? $average : 0);
-            ?>
-          </div>
+         <!-- ⭐ Avis & étoiles -->
+<div class="avis">
+  <?php
+  $average = $product->get_average_rating();
 
-          <!-- 📄 Extrait produit -->
-          <div class="texte-produit">
-            <?php woocommerce_template_single_excerpt(); ?>
-          </div>
+  if ($average > 0) {
+    // ⭐ Affiche la notation WooCommerce (ex: 3,5 étoiles remplis / vides)
+    echo wc_get_rating_html($average);
+  } else {
+    // ⭐ Aucun avis → afficher 5 étoiles vides comme dans ton design
+    for ($i = 0; $i < 5; $i++) {
+      echo '<img src="' . get_template_directory_uri() . '/assets/img/star.png" alt="Étoile de notation" />';
+    }
+  }
+  ?>
+</div>
+
+      <!-- 📄 Description complète (avec fallback) -->
+<div class="texte-produit">
+  <?php
+  $full = get_post_field( 'post_content', get_the_ID() );
+
+  if ( ! empty( $full ) ) {
+    echo apply_filters( 'the_content', $full );
+  } else {
+    // Si pas de description complète, on affiche la description courte
+    echo wpautop( get_the_excerpt() );
+  }
+  ?>
+</div>
 
           <!-- 💰 Prix + bouton panier -->
           <div class="prix_bouton">

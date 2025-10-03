@@ -3,7 +3,7 @@
    =============================== */
 .woocommerce .woocommerce-breadcrumb {
    width: 100%;
-  margin: var(--spacing-xs) var(--spacing-xl);
+  margin: var(--spacing-xs) 6rem;
 }
 
 /* ===============================
@@ -14,10 +14,8 @@
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-md);
-
   width: 90%;
   margin: var(--spacing-md) auto;
-
   background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
               url("../img/fond_bois_article_blog.jpg") center/cover no-repeat;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
@@ -163,19 +161,15 @@
 
 /* ✅ Prix + bouton panier */
 .description .prix_bouton {
-
-  margin-top: 10rem; /* au lieu de auto */
-  padding: var(--spacing-md); /* espace interne pour respirer */
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-
 .description .prix_bouton p {
   font-weight: bold;
   font-size: var(--font-size-h3);
-  margin-left: var(--spacing-xl);
+  margin-left: var(--spacing-sm);
 }
 
 .description .prix_bouton button,
@@ -188,7 +182,6 @@
   background-color: green;
   border-radius: 10px;
   padding: 1rem 2rem;
-  margin: var(--spacing-sm);
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;

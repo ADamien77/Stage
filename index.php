@@ -74,107 +74,75 @@
       <h2>Nouveautés</h2>
       <div class="separateur"></div>
     </div>
+
     <div class="cards">
-      <!-- Produit 1 -->
-      <div class="card">
-        <div class="image">
-          <img src="<?php echo get_template_directory_uri(); ?>/assets/img/jouet_2.jpg" alt="Jouet en bois fait main" />
+      <?php
+      // Requête : récupérer les 3 derniers produits publiés
+      $args = array(
+        'post_type'      => 'product',
+        'posts_per_page' => 3,
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+      );
 
-        </div>
-        <div class="contenu">
-          <h3>Sous titre h3</h3>
-          <div class="avis">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/star.png" alt="Étoile de notation" />
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/star.png" alt="Étoile de notation" />
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/star.png" alt="Étoile de notation" />
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/star.png" alt="Étoile de notation" />
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/star.png" alt="Étoile de notation" />
+      $loop = new WP_Query($args);
 
-          </div>
-          <div class="description">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-              in magna at est vestibulum fringilla at et dui fringilla fringilla.
-            </p>
-          </div>
-        </div>
-        <div class="prix_bouton">
-          <div class="prix">
-            <p>9.99€</p>
-          </div>
-          <div class="bouton">
-            <a href="/public/pages/product_sheet.php">Plus d'informations</a>
-          </div>
-        </div>
-      </div>
+      if ($loop->have_posts()) :
+        while ($loop->have_posts()) : $loop->the_post();
+          global $product;
+      ?>
+          <div class="card">
+            <div class="image">
+              <a href="<?php the_permalink(); ?>">
+                <?php
+                if (has_post_thumbnail()) {
+                  the_post_thumbnail('medium');
+                } else {
+                  echo '<img src="' . wc_placeholder_img_src() . '" alt="Image produit" />';
+                }
+                ?>
+              </a>
+            </div>
 
-      <!-- Produit 2 -->
-      <div class="card">
-        <div class="image">
-          <img src="<?php echo get_template_directory_uri(); ?>/assets/img/piques.jpg" alt="Pique en bois fait main" />
+            <div class="contenu">
+              <h3><?php the_title(); ?></h3>
 
-        </div>
-        <div class="contenu">
-          <h3>Sous titre h3</h3>
-          <div class="avis">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/star.png" alt="Étoile de notation" />
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/star.png" alt="Étoile de notation" />
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/star.png" alt="Étoile de notation" />
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/star.png" alt="Étoile de notation" />
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/star.png" alt="Étoile de notation" />
+              <div class="avis">
+                <?php
+                // Affiche les étoiles WooCommerce si dispo
+                if (wc_get_rating_html($product->get_average_rating())) {
+                  echo wc_get_rating_html($product->get_average_rating());
+                } else {
+                  // Si pas d'avis, afficher 5 étoiles "vides"
+                  for ($i = 0; $i < 5; $i++) {
+                    echo '<img src="' . get_template_directory_uri() . '/assets/img/star.png" alt="Étoile de notation" />';
+                  }
+                }
+                ?>
+              </div>
 
-          </div>
-          <div class="description">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-              in magna at est vestibulum fringilla at et dui fringilla fringilla.
-            </p>
-          </div>
-        </div>
-        <div class="prix_bouton">
-          <div class="prix">
-            <p>9.99€</p>
-          </div>
-          <div class="bouton">
-            <a href="/public/pages/product_sheet.php">Plus d'informations</a>
-          </div>
-        </div>
-      </div>
+              <div class="description">
+                <p><?php echo wp_trim_words(get_the_excerpt(), 20, '...'); ?></p>
+              </div>
+            </div>
 
-      <!-- Produit 3 -->
-      <div class="card">
-        <div class="image">
-          <img src="<?php echo get_template_directory_uri(); ?>/assets/img/couteau_1.jpg" alt="Couteau en bois fait main" />
-
-        </div>
-        <div class="contenu">
-          <h3>Sous titre h3</h3>
-          <div class="avis">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/star.png" alt="Étoile de notation" />
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/star.png" alt="Étoile de notation" />
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/star.png" alt="Étoile de notation" />
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/star.png" alt="Étoile de notation" />
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/star.png" alt="Étoile de notation" />
-
+            <div class="prix_bouton">
+              <div class="prix">
+                <p><?php echo $product->get_price_html(); ?></p>
+              </div>
+              <div class="bouton">
+                <a href="<?php the_permalink(); ?>">Plus d'informations</a>
+              </div>
+            </div>
           </div>
-          <div class="description">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-              in magna at est vestibulum fringilla at et dui fringilla fringilla.
-            </p>
-          </div>
-        </div>
-        <div class="prix_bouton">
-          <div class="prix">
-            <p>9.99€</p>
-          </div>
-          <div class="bouton">
-            <a href="/public/pages/product_sheet.php">Plus d'informations</a>
-          </div>
-        </div>
-      </div>
+      <?php
+        endwhile;
+      endif;
+      wp_reset_postdata();
+      ?>
     </div>
   </section>
+
 
   <!-- CONSEILS -->
   <section class="conseils">
