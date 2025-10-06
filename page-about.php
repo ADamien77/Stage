@@ -1,19 +1,3 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <!-- Métadonnées -->
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Feuille de style -->
-  <link rel="stylesheet" href="../css/main.css" />
-
-  <!-- Titre de la page -->
-  <title>A propos</title>
-</head>
-<body>
-
-  <!-- Header WordPress -->
   <?php get_header(); ?>
 
   <!-- ===================== TITRE ===================== -->

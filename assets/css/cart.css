@@ -1,0 +1,203 @@
+/* ===== Page PANIER ===== */
+.woocommerce-cart .woocommerce {
+  max-width: 1100px;
+  margin: 0 auto var(--spacing-md) auto;
+  padding: 20px;
+}
+
+/* ===== TITRE DE SECTION ===== */
+.title_cart {
+  /* Conteneur du titre centré */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title_cart h1 {
+  /* Titre responsive centré */
+  font-size: clamp(1.5rem, 2vw, 2.2rem); /* Taille de police fluide */
+  margin: var(--spacing-sm) auto; 
+  text-align: center;
+  padding: 0 var(--spacing-md);
+  width: 25%;
+}
+
+.title_cart .separateur {
+  /* Barre colorée sous le titre */
+  height: 10px;
+  background: url("../img/fond_header.jpg") center/cover no-repeat;
+  margin: var(--spacing-lg) auto;
+}
+
+/* Table principale */
+.woocommerce-cart table.shop_table {
+  width: 100%;
+  border-collapse: collapse;
+  border: none;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.woocommerce-cart table.shop_table th {
+  background: var(--color-primary, #4CAF50);
+  color: #fff;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.woocommerce-cart table.shop_table td {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Totaux panier */
+.woocommerce-cart .cart_totals {
+  background: #f9f9f9;
+  padding: 25px;
+  border-radius: 10px;
+  margin-top: 30px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+}
+
+.woocommerce-cart .wc-proceed-to-checkout a.checkout-button {
+  display: block;
+  background: #4CAF50;
+  color: #fff;
+  border-radius: 8px;
+  text-align: center;
+  margin: 0 auto;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.woocommerce-cart .wc-proceed-to-checkout a.checkout-button:hover {
+  background: #43a047;
+}
+
+/* ===== Compteur panier ===== */
+/* Assure que le conteneur d'icônes permet l'affichage du badge */
+.icons, .icons a {
+  position: relative; /* nécessaire pour le position:absolute du badge */
+  display: inline-block;
+  overflow: visible !important; /* si parent cachait le badge */
+}
+
+/* Badge compteur panier */
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  z-index: 9999;
+  display: inline-flex !important;  /* evite display:none */
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: var(--color-primary, #4CAF50);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Si tu veux un effet "pop" à l'ajout */
+.cart-count.pop {
+  transform: scale(1.25);
+  transition: transform .18s ease;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablettes (entre 768px et 1024px) */
+@media (max-width: 1024px) {
+  .woocommerce-cart .woocommerce {
+    padding: 15px;
+  }
+
+  .woocommerce-cart table.shop_table th,
+  .woocommerce-cart table.shop_table td {
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  .woocommerce-cart .cart_totals {
+    padding: 20px;
+  }
+}
+
+/* Mobiles (max 768px) */
+@media (max-width: 768px) {
+  .woocommerce-cart table.shop_table thead {
+    display: none;
+  }
+
+  .woocommerce-cart table.shop_table,
+  .woocommerce-cart table.shop_table tbody,
+  .woocommerce-cart table.shop_table tr,
+  .woocommerce-cart table.shop_table td {
+    display: block;
+    width: 100%;
+  }
+
+  .woocommerce-cart table.shop_table tr {
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  }
+
+  .woocommerce-cart table.shop_table td {
+    border: none;
+    padding: 10px 0;
+    text-align: right;
+    position: relative;
+  }
+
+  .woocommerce-cart table.shop_table td::before {
+    content: attr(data-title);
+    position: absolute;
+    left: 0;
+    font-weight: 600;
+    color: #333;
+    text-transform: capitalize;
+  }
+
+  .woocommerce-cart .cart_totals {
+    margin-top: 20px;
+    padding: 15px;
+  }
+
+  .woocommerce-cart .wc-proceed-to-checkout a.checkout-button {
+    padding: 12px;
+    font-size: 15px;
+  }
+}
+
+/* Très petits écrans (max 480px) */
+@media (max-width: 480px) {
+  .woocommerce-cart .woocommerce {
+    padding: 10px;
+  }
+
+  .woocommerce-cart table.shop_table tr {
+    padding: 12px;
+  }
+
+  .woocommerce-cart .wc-proceed-to-checkout a.checkout-button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .woocommerce-cart .cart_totals {
+    padding: 12px;
+  }
+}
+

@@ -1,14 +1,30 @@
 <?php
-
 /**
- * Fonctions principales du thème
+ * ============================================================
+ * 🎨 FUNCTIONS.PHP — Fonctions principales du thème
+ * ============================================================
+ * Ce fichier gère :
+ * - Le chargement des styles & scripts
+ * - Les menus WordPress
+ * - Les supports du thème (logo, images à la une, etc.)
+ * - La compatibilité WooCommerce
+ * - Le formulaire de contact natif
+ * - Les personnalisations WooCommerce (ex. champ gravure)
+ * - Les optimisations de recherche (produits + redirection)
+ * ============================================================
  */
 
+defined('ABSPATH') || exit; // Sécurité
+
 /* ==========================================================================
-   1. Chargement des styles et scripts
+   1️⃣ — CHARGEMENT DES STYLES & SCRIPTS
    ========================================================================== */
-function montheme_enqueue_assets()
-{
+
+/**
+ * Charger les fichiers CSS et JS du thème
+ */
+function montheme_enqueue_assets() {
+
     // Style principal (style.css à la racine du thème)
     wp_enqueue_style(
         'theme-style',
@@ -19,7 +35,7 @@ function montheme_enqueue_assets()
     wp_enqueue_style(
         'theme-main',
         get_template_directory_uri() . '/assets/css/main.css',
-        array('theme-style'), // dépend de style.css
+        array('theme-style'),
         '1.0'
     );
 
@@ -27,54 +43,53 @@ function montheme_enqueue_assets()
     wp_enqueue_script(
         'theme-script',
         get_template_directory_uri() . '/assets/js/main.js',
-        array('jquery'), // dépend de jQuery
+        array('jquery'),
         '1.0',
-        true // chargé en footer
+        true // en footer
     );
-}
-add_action('wp_enqueue_scripts', 'montheme_enqueue_assets');
 
-// Charger des styles spécifiques WooCommerce
-function mon_theme_enqueue_styles()
-{
-    // Charger le style global
-    wp_enqueue_style('theme-style', get_stylesheet_uri());
-
-    // Charger le CSS de la fiche produit uniquement sur les pages produit
-    if (is_product()) {
+    // Charger le CSS de la fiche produit uniquement sur les pages produit WooCommerce
+    if ( is_product() ) {
         wp_enqueue_style(
             'product-sheet-style',
             get_stylesheet_directory_uri() . '/assets/css/single-product.css',
             array('theme-style'),
-            filemtime(get_stylesheet_directory() . '/assets/css/single-product.css') // version dynamique pour vider le cache
+            filemtime( get_stylesheet_directory() . '/assets/css/single-product.css' )
         );
     }
 }
-add_action('wp_enqueue_scripts', 'mon_theme_enqueue_styles');
+add_action('wp_enqueue_scripts', 'montheme_enqueue_assets');
 
 
 /* ==========================================================================
-   2. Enregistrement des menus
+   2️⃣ — MENUS WORDPRESS
    ========================================================================== */
-function montheme_register_menus()
-{
+
+/**
+ * Enregistre les emplacements de menus du thème
+ */
+function montheme_register_menus() {
     register_nav_menus(array(
-        'primary' => __('Menu principal', 'monthemeperso'), // Menu du header
-        'footer'  => __('Menu pied de page', 'monthemeperso') // Menu du footer
+        'primary' => __('Menu principal', 'monthemeperso'),
+        'footer'  => __('Menu pied de page', 'monthemeperso'),
     ));
 }
 add_action('after_setup_theme', 'montheme_register_menus');
 
 
 /* ==========================================================================
-   3. Activation des fonctionnalités natives WordPress
+   3️⃣ — SUPPORTS & FONCTIONNALITÉS DU THÈME
    ========================================================================== */
-function montheme_theme_supports()
-{
-    // Balises <title> dynamiques
+
+/**
+ * Activer certaines fonctionnalités natives WordPress
+ */
+function montheme_theme_supports() {
+
+    // Balise <title> dynamique
     add_theme_support('title-tag');
 
-    // Logo personnalisé (ajout via le Customizer)
+    // Logo personnalisé (Customizer)
     add_theme_support('custom-logo', array(
         'height'      => 100,
         'width'       => 300,
@@ -82,7 +97,7 @@ function montheme_theme_supports()
         'flex-width'  => true,
     ));
 
-    // Images à la une (featured image)
+    // Image à la une
     add_theme_support('post-thumbnails');
 
     // Support HTML5 pour certains éléments
@@ -93,62 +108,143 @@ function montheme_theme_supports()
         'gallery',
         'caption'
     ));
+
+    // Compatibilité WooCommerce
+    add_theme_support('woocommerce');
 }
 add_action('after_setup_theme', 'montheme_theme_supports');
 
-// Définir une taille d’image personnalisée
-add_action('after_setup_theme', function () {
-    add_image_size('personnalise', 1200, 400, true); // largeur 1200px, hauteur 400px, crop forcé
+
+/**
+ * Taille d’image personnalisée
+ */
+add_action('after_setup_theme', function() {
+    add_image_size('personnalise', 1200, 400, true);
 });
 
 
 /* ==========================================================================
-   4. Compatibilité WooCommerce
+   4️⃣ — FONCTIONNALITÉS WOOCOMMERCE
    ========================================================================== */
-function mon_theme_add_woocommerce_support()
-{
-    add_theme_support('woocommerce');
-}
-add_action('after_setup_theme', 'mon_theme_add_woocommerce_support');
 
-// Rafraîchir le compteur panier en AJAX
-add_filter('woocommerce_add_to_cart_fragments', 'refresh_cart_count_ajax');
-function refresh_cart_count_ajax($fragments)
-{
+/**
+ * Met à jour dynamiquement le compteur du panier (AJAX)
+ */
+add_filter('woocommerce_add_to_cart_fragments', function($fragments) {
     ob_start(); ?>
     <span class="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
-<?php
+    <?php
     $fragments['.cart-count'] = ob_get_clean();
     return $fragments;
-}
+});
+
+
+/* -----------------------------------------------------------
+   💡 Champs personnalisés : ajout d’image de gravure (produit ID 145)
+   ----------------------------------------------------------- */
+
+/**
+ * 1️⃣ — Afficher le champ d’upload sur la fiche produit
+ */
+add_action('woocommerce_before_add_to_cart_button', function() {
+    global $product;
+    if ( $product->get_id() == 145 ) {
+        echo '<div class="champ-image-gravure" style="margin-bottom:15px;">
+                <label for="gravure_image">Téléversez votre image pour la gravure :</label><br>
+                <input type="file" name="gravure_image" id="gravure_image" accept="image/*" />
+              </div>';
+    }
+});
+
+/**
+ * 2️⃣ — Validation du champ avant ajout au panier
+ */
+add_filter('woocommerce_add_to_cart_validation', function($passed, $product_id) {
+
+    if ($product_id == 145) {
+
+        if (empty($_FILES['gravure_image']['name'])) {
+            wc_add_notice('⚠️ Merci de téléverser votre image pour la gravure.', 'error');
+            return false;
+        }
+
+        $allowed = array('jpg', 'jpeg', 'png', 'gif');
+        $file_ext = pathinfo($_FILES['gravure_image']['name'], PATHINFO_EXTENSION);
+        if (!in_array(strtolower($file_ext), $allowed)) {
+            wc_add_notice('⚠️ Seules les images JPG, PNG ou GIF sont autorisées.', 'error');
+            return false;
+        }
+
+        $file_type = wp_check_filetype($_FILES['gravure_image']['name']);
+        if (strpos($file_type['type'], 'image') === false) {
+            wc_add_notice('⚠️ Le fichier téléversé n’est pas une image valide.', 'error');
+            return false;
+        }
+    }
+
+    return $passed;
+}, 10, 2);
+
+/**
+ * 3️⃣ — Ajout des métadonnées dans le panier
+ */
+add_filter('woocommerce_add_cart_item_data', function($cart_item_data, $product_id) {
+    if ($product_id == 145 && !empty($_FILES['gravure_image']['name'])) {
+        $upload = wp_upload_bits(
+            $_FILES['gravure_image']['name'],
+            null,
+            file_get_contents($_FILES['gravure_image']['tmp_name'])
+        );
+        if (!$upload['error']) {
+            $cart_item_data['gravure_image'] = $upload['url'];
+        }
+    }
+    return $cart_item_data;
+}, 10, 2);
+
+/**
+ * 4️⃣ — Afficher l’image dans le panier et le checkout
+ */
+add_filter('woocommerce_get_item_data', function($item_data, $cart_item) {
+    if (isset($cart_item['gravure_image'])) {
+        $item_data[] = array(
+            'name'  => 'Image gravure',
+            'value' => '<a href="' . esc_url($cart_item['gravure_image']) . '" target="_blank">Voir l’image</a>',
+        );
+    }
+    return $item_data;
+}, 10, 2);
+
+/**
+ * 5️⃣ — Sauvegarde de l’image dans la commande
+ */
+add_action('woocommerce_add_order_item_meta', function($item_id, $values) {
+    if (isset($values['gravure_image'])) {
+        wc_add_order_item_meta($item_id, 'Image gravure', $values['gravure_image']);
+    }
+}, 10, 2);
 
 
 /* ==========================================================================
-   5. Traitement du formulaire de contact (en dur)
+   5️⃣ — FORMULAIRE DE CONTACT PERSONNALISÉ
    ========================================================================== */
-function montheme_traitement_formulaire()
-{
+
+/**
+ * Traitement du formulaire de contact "en dur"
+ */
+function montheme_traitement_formulaire() {
     if (isset($_POST['form_contact'])) {
 
-        // Sécurisation des champs
         $nom     = sanitize_text_field($_POST['nom']);
         $prenom  = sanitize_text_field($_POST['prenom']);
         $email   = sanitize_email($_POST['email']);
         $message = sanitize_textarea_field($_POST['message']);
 
-        // Destinataire de l'email
-        $to = 'abadie.damien@devadam.com';
-
-        // Sujet de l’email
+        $to      = 'abadie.damien@devadam.com';
         $subject = "Nouveau message de $prenom $nom via le formulaire de contact";
-
-        // Corps de l’email
-        $body = "Nom : $nom\nPrénom : $prenom\nEmail : $email\n\nMessage :\n$message";
-
-        // En-têtes
+        $body    = "Nom : $nom\nPrénom : $prenom\nEmail : $email\n\nMessage :\n$message";
         $headers = array('Content-Type: text/plain; charset=UTF-8');
 
-        // Envoi
         if (wp_mail($to, $subject, $body, $headers)) {
             echo '<div class="confirmation">✅ Merci, votre message a bien été envoyé.</div>';
         } else {
@@ -160,90 +256,57 @@ add_action('wp_head', 'montheme_traitement_formulaire');
 
 
 /* ==========================================================================
-   6. Ajout de champs personnels au panier
+   6️⃣ — RECHERCHE : OPTIMISATION ET REDIRECTION
    ========================================================================== */
 
-// 1️⃣ Ajouter le champ avant le bouton "Ajouter au panier"
-add_action('woocommerce_before_add_to_cart_button', 'ajouter_champ_image_gravure');
-function ajouter_champ_image_gravure()
-{
-    global $product;
-
-    // ID du produit spécifique (Gravure sur bois)
-    if ($product->get_id() == 145) {
-        echo '<div class="champ-image-gravure" style="margin-bottom:15px;">
-                <label for="gravure_image">Téléversez votre image pour la gravure :</label><br>
-                <input type="file" name="gravure_image" id="gravure_image" accept="image/*" />
-              </div>';
+/**
+ * 🧭 1. Exclure les pages des résultats de recherche
+ *     (on garde seulement les articles et produits)
+ */
+function my_search_include_only_posts_and_products($query) {
+    if (!is_admin() && $query->is_main_query() && $query->is_search()) {
+        // On exclut les pages
+        $query->set('post_type', array('post', 'product'));
     }
 }
+add_action('pre_get_posts', 'my_search_include_only_posts_and_products');
 
-// 2️⃣ Valider le champ avant l’ajout au panier
-add_filter('woocommerce_add_to_cart_validation', 'verifier_champ_image_gravure', 10, 3);
-function verifier_champ_image_gravure($passed, $product_id, $quantity)
-{
 
-    // Vérification uniquement pour le produit ID 145
-    if ($product_id == 145) {
+/**
+ * 🚀 2. Rediriger automatiquement si le titre correspond exactement
+ *     à une page ou un produit
+ */
+function redirect_exact_content_match() {
+    if (is_search() && !is_admin() && isset($_GET['s'])) {
+        $search_query = trim(sanitize_text_field($_GET['s']));
 
-        // ⚠ Vérifie que le fichier est envoyé
-        if (empty($_FILES['gravure_image']['name'])) {
-            wc_add_notice('⚠️ Merci de téléverser votre image pour la gravure.', 'error');
-            return false;
-        }
-
-        // ⚠ Vérifie l’extension du fichier
-        $allowed = array('jpg', 'jpeg', 'png', 'gif');
-        $file_ext = pathinfo($_FILES['gravure_image']['name'], PATHINFO_EXTENSION);
-
-        if (! in_array(strtolower($file_ext), $allowed)) {
-            wc_add_notice('⚠️ Seules les images JPG, PNG ou GIF sont autorisées.', 'error');
-            return false;
-        }
-
-        // ⚠ Vérifie le type MIME pour sécurité
-        $file_type = wp_check_filetype($_FILES['gravure_image']['name']);
-        if (strpos($file_type['type'], 'image') === false) {
-            wc_add_notice('⚠️ Le fichier téléversé n’est pas une image valide.', 'error');
-            return false;
-        }
-    }
-
-    return $passed;
-}
-
-// 3️⃣ Ajouter le fichier en meta produit dans le panier
-add_filter('woocommerce_add_cart_item_data', 'ajouter_meta_image_gravure', 10, 2);
-function ajouter_meta_image_gravure($cart_item_data, $product_id)
-{
-    if ($product_id == 145 && ! empty($_FILES['gravure_image']['name'])) {
-        // Téléverse le fichier dans wp-content/uploads
-        $upload = wp_upload_bits($_FILES['gravure_image']['name'], null, file_get_contents($_FILES['gravure_image']['tmp_name']));
-        if (! $upload['error']) {
-            $cart_item_data['gravure_image'] = $upload['url']; // Stocke l’URL dans le panier
-        }
-    }
-    return $cart_item_data;
-}
-
-// 4️⃣ Afficher l’image dans le panier et checkout
-add_filter('woocommerce_get_item_data', 'afficher_meta_image_gravure', 10, 2);
-function afficher_meta_image_gravure($item_data, $cart_item)
-{
-    if (isset($cart_item['gravure_image'])) {
-        $item_data[] = array(
-            'name'  => 'Image gravure',
-            'value' => '<a href="' . esc_url($cart_item['gravure_image']) . '" target="_blank">Voir l’image</a>'
+        // Vérifie d'abord s'il existe une page correspondant exactement
+        $args_page = array(
+            'post_type'      => 'page',
+            'title'          => $search_query,
+            'post_status'    => 'publish',
+            'posts_per_page' => 1,
         );
-    }
-    return $item_data;
-}
 
-// 5️⃣ Sauvegarder l’image dans la commande
-add_action('woocommerce_add_order_item_meta', 'sauvegarder_meta_image_gravure', 10, 2);
-function sauvegarder_meta_image_gravure($item_id, $values)
-{
-    if (isset($values['gravure_image'])) {
-        wc_add_order_item_meta($item_id, 'Image gravure', $values['gravure_image']);
+        $page = get_posts($args_page);
+        if ($page && count($page) === 1) {
+            wp_redirect(get_permalink($page[0]->ID));
+            exit;
+        }
+
+        // Sinon, on vérifie s'il existe un produit avec le même nom
+        $args_product = array(
+            'post_type'      => 'product',
+            'title'          => $search_query,
+            'post_status'    => 'publish',
+            'posts_per_page' => 1,
+        );
+
+        $product = get_posts($args_product);
+        if ($product && count($product) === 1) {
+            wp_redirect(get_permalink($product[0]->ID));
+            exit;
+        }
     }
 }
+add_action('template_redirect', 'redirect_exact_content_match');
