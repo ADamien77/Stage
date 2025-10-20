@@ -152,6 +152,7 @@ nav .sub-menu li a {
   box-shadow: none;
   justify-content: flex-start;
   padding: 10px 15px;
+  margin: 2px 0;
 }
 
 nav .sub-menu li a:hover {
@@ -170,6 +171,40 @@ nav li.open > a::after {
   transform: rotate(180deg);
 }
 
+/* ===== Menu Mon Compte mobile ===== */
+.mobile-account-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 75%;
+  height: 100%;
+  background: #fff;
+  box-shadow: -4px 0 8px rgba(0,0,0,0.15);
+  padding: 20px;
+  z-index: 9999;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.mobile-account-menu.active {
+  display: block;
+  transform: translateX(0);
+}
+
+.mobile-account-menu a {
+  display: block;
+  margin-bottom: 15px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+@media (min-width: 1024px) {
+  .mobile-account-menu {
+    display: none !important;
+  }
+}
 
 /* ===================================
    🍔 MENU BURGER (mobile)

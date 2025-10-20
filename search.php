@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
 get_header();
 ?>
 
-<section class="search">
+<section class="search-section">
 
   <h1 class="search-title">
     Résultats pour : "<?php echo get_search_query(); ?>"

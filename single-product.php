@@ -66,20 +66,11 @@ if (have_posts()) :
           <h1><?php the_title(); ?></h1>
 
           <!-- ⭐ Avis & étoiles -->
+          <?php
+          global $product;
+          ?>
           <div class="avis">
-            <?php
-            $average = $product->get_average_rating();
-
-            if ($average > 0) {
-              // ⭐ Affiche la notation WooCommerce (ex: 3,5 étoiles remplis / vides)
-              echo wc_get_rating_html($average);
-            } else {
-              // ⭐ Aucun avis → afficher 5 étoiles vides comme dans ton design
-              for ($i = 0; $i < 5; $i++) {
-                echo '<img src="' . get_template_directory_uri() . '/assets/img/star.png" alt="Étoile de notation" />';
-              }
-            }
-            ?>
+            <?php echo wc_get_rating_html($product->get_average_rating()); ?>
           </div>
 
           <!-- 📄 Description complète (avec fallback) -->
@@ -113,6 +104,8 @@ if (have_posts()) :
           <?php woocommerce_product_additional_information_tab(); ?>
         </div>
       </div>
+      <?php comments_template(); ?>
+
       <!-- ===============================
      Produits similaires
 =============================== -->

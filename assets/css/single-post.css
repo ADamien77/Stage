@@ -33,15 +33,33 @@
    📰 ARTICLE PRINCIPAL
    =============================== */
 .single-article .article_1 {
+    position: relative;
     background-image: url('../img/fond_bois_article_blog.jpg');
     background-size: cover;
+    background-position: center;
     border-radius: 20px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     padding: var(--spacing-md);
     display: block;
     text-align: justify;
-    overflow: hidden; /* important pour float */
+    overflow: hidden;
 }
+
+/* Calque semi-transparent par-dessus le fond */
+.single-article .article_1::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.682); /* Ajuste l’opacité ici */
+    z-index: 0;
+}
+
+/* Pour que le texte reste visible au-dessus */
+.single-article .article_1 > * {
+    position: relative;
+    z-index: 1;
+}
+
 
 /* Image flottante à gauche */
 .single-article .article_1 .image-centree-magazine {

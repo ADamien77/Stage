@@ -138,46 +138,132 @@ add_filter('woocommerce_add_to_cart_fragments', function($fragments) {
     return $fragments;
 });
 
-
 /* -----------------------------------------------------------
-   💡 Champs personnalisés : ajout d’image de gravure (produit ID 145)
+   💡 Champs personnalisés : ajout d’image et d’options gravure (produit ID 202)
    ----------------------------------------------------------- */
 
 /**
- * 1️⃣ — Afficher le champ d’upload sur la fiche produit
+ * 1️⃣ — Afficher les champs personnalisés sur la fiche produit
  */
 add_action('woocommerce_before_add_to_cart_button', function() {
     global $product;
-    if ( $product->get_id() == 145 ) {
-        echo '<div class="champ-image-gravure" style="margin-bottom:15px;">
-                <label for="gravure_image">Téléversez votre image pour la gravure :</label><br>
-                <input type="file" name="gravure_image" id="gravure_image" accept="image/*" />
-              </div>';
+
+    // ✅ On cible uniquement le produit Gravure (ID 202)
+    if ($product->get_id() == 202) {
+        ?>
+        <div class="champ-gravure" style="margin-bottom:20px;">
+
+            <!-- 🖼️ Upload image -->
+            <label for="gravure_image"><strong>📷 Téléversez votre image pour la gravure :</strong></label><br>
+            <input type="file" name="gravure_image" id="gravure_image" accept="image/*" />
+            <p id="upload_message" style="display:none; color:green; font-weight:bold;">✅ Photo bien enregistrée</p>
+
+            <hr style="margin:15px 0;">
+
+            <!-- 📝 Message client -->
+            <label for="gravure_commentaire"><strong>🖊️ Message pour la gravure :</strong></label><br>
+            <textarea name="gravure_commentaire" id="gravure_commentaire" rows="3" placeholder="Vos consignes pour la gravure"></textarea>
+
+            <hr style="margin:15px 0;">
+
+            <!-- ⚙️ Options payantes -->
+            <label><input type="checkbox" name="gravure_amelioration" value="oui"> ✅ Pour 3€ améliorer ma photo (retouche qualité)</label><br>
+            <label><input type="checkbox" name="gravure_texte_dos" value="oui"> ✅ Pour 3€ ajouter un mot sur la photo ou au dos</label><br>
+
+            <hr style="margin:15px 0;">
+
+            <!-- 📐 Choix dimension -->
+            <label for="gravure_dimension"><strong>📏 Choisissez la dimension :</strong></label><br>
+            <select name="gravure_dimension" id="gravure_dimension" required>
+                <option value="">-- Sélectionnez une dimension --</option>
+                <option value="10x15">10x15 cm</option>
+                <option value="15x21">15x21 cm</option>
+                <option value="20x30">20x30 cm</option>
+            </select>
+
+            <br><br>
+
+            <!-- 🖼️ Choix avec/sans cadre -->
+            <label for="gravure_cadre"><strong>🖼️ Avec ou sans cadre :</strong></label><br>
+            <select name="gravure_cadre" id="gravure_cadre" required>
+                <option value="">-- Choisissez une option --</option>
+                <option value="avec_cadre">Avec cadre</option>
+                <option value="sans_cadre">Sans cadre</option>
+            </select>
+
+            <hr style="margin:15px 0;">
+
+            <!-- 🎁 Envoi personnalisé -->
+            <label>
+                <input type="checkbox" name="gravure_cadeau" id="gravure_cadeau" value="oui">
+                🎁 Pour 1€ supplémentaire : emballage cadeau + carte message
+            </label>
+
+            <!-- ✍️ Message cadeau (affiché uniquement si case cochée) -->
+            <div id="zone_message_cadeau" style="display:none; margin-top:10px;">
+                <label for="gravure_message_cadeau"><strong>💌 Message à écrire sur la carte :</strong></label><br>
+                <textarea name="gravure_message_cadeau" id="gravure_message_cadeau" rows="3" placeholder="Ex : Joyeux anniversaire, je pense à toi !"></textarea>
+            </div>
+        </div>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('gravure_image');
+            const uploadMsg = document.getElementById('upload_message');
+            const cadeauCheckbox = document.getElementById('gravure_cadeau');
+            const zoneMessageCadeau = document.getElementById('zone_message_cadeau');
+
+            // ✅ Message quand une image est choisie
+            if (fileInput) {
+                fileInput.addEventListener('change', function() {
+                    if (this.files.length > 0) uploadMsg.style.display = 'block';
+                });
+            }
+
+            // ✅ Affiche ou cache le champ message cadeau
+            if (cadeauCheckbox && zoneMessageCadeau) {
+                cadeauCheckbox.addEventListener('change', function() {
+                    zoneMessageCadeau.style.display = this.checked ? 'block' : 'none';
+                });
+            }
+
+            // ✅ Vérifie que le fichier est bien sélectionné avant ajout au panier
+            const form = document.querySelector('form.cart');
+            if (form && fileInput) {
+                form.addEventListener('submit', function(e) {
+                    if (fileInput.files.length === 0) {
+                        e.preventDefault();
+                        alert("⚠️ Merci de téléverser une image avant d’ajouter le produit au panier.");
+                        fileInput.focus();
+                    }
+                });
+            }
+        });
+        </script>
+        <?php
     }
 });
 
+
+
 /**
- * 2️⃣ — Validation du champ avant ajout au panier
+ * 2️⃣ — Validation avant ajout au panier
  */
 add_filter('woocommerce_add_to_cart_validation', function($passed, $product_id) {
+    if ($product_id == 202) {
 
-    if ($product_id == 145) {
-
+        // Vérifie l’upload obligatoire
         if (empty($_FILES['gravure_image']['name'])) {
             wc_add_notice('⚠️ Merci de téléverser votre image pour la gravure.', 'error');
             return false;
         }
 
-        $allowed = array('jpg', 'jpeg', 'png', 'gif');
-        $file_ext = pathinfo($_FILES['gravure_image']['name'], PATHINFO_EXTENSION);
-        if (!in_array(strtolower($file_ext), $allowed)) {
-            wc_add_notice('⚠️ Seules les images JPG, PNG ou GIF sont autorisées.', 'error');
-            return false;
-        }
+        // Vérifie le format
+        $allowed = ['jpg', 'jpeg', 'png', 'gif'];
+        $file_ext = strtolower(pathinfo($_FILES['gravure_image']['name'], PATHINFO_EXTENSION));
 
-        $file_type = wp_check_filetype($_FILES['gravure_image']['name']);
-        if (strpos($file_type['type'], 'image') === false) {
-            wc_add_notice('⚠️ Le fichier téléversé n’est pas une image valide.', 'error');
+        if (!in_array($file_ext, $allowed)) {
+            wc_add_notice('⚠️ Seules les images JPG, PNG ou GIF sont autorisées.', 'error');
             return false;
         }
     }
@@ -185,42 +271,101 @@ add_filter('woocommerce_add_to_cart_validation', function($passed, $product_id) 
     return $passed;
 }, 10, 2);
 
+
+
 /**
- * 3️⃣ — Ajout des métadonnées dans le panier
+ * 3️⃣ — Sauvegarder les données dans le panier
  */
 add_filter('woocommerce_add_cart_item_data', function($cart_item_data, $product_id) {
-    if ($product_id == 145 && !empty($_FILES['gravure_image']['name'])) {
-        $upload = wp_upload_bits(
-            $_FILES['gravure_image']['name'],
-            null,
-            file_get_contents($_FILES['gravure_image']['tmp_name'])
-        );
-        if (!$upload['error']) {
-            $cart_item_data['gravure_image'] = $upload['url'];
+    if ($product_id == 202) {
+
+        // 📸 Image uploadée
+        if (!empty($_FILES['gravure_image']['name'])) {
+            $upload = wp_upload_bits(
+                $_FILES['gravure_image']['name'],
+                null,
+                file_get_contents($_FILES['gravure_image']['tmp_name'])
+            );
+            if (!$upload['error']) {
+                $cart_item_data['gravure_image'] = $upload['url'];
+            }
+        }
+
+        // 🧾 Autres champs personnalisés
+        $fields = [
+            'gravure_commentaire',
+            'gravure_amelioration',
+            'gravure_texte_dos',
+            'gravure_dimension',
+            'gravure_cadre',
+            'gravure_cadeau',
+            'gravure_message_cadeau', // 💌 Nouveau champ
+        ];
+
+        foreach ($fields as $field) {
+            if (!empty($_POST[$field])) {
+                $cart_item_data[$field] = sanitize_text_field($_POST[$field]);
+            }
         }
     }
+
     return $cart_item_data;
 }, 10, 2);
 
+
+
 /**
- * 4️⃣ — Afficher l’image dans le panier et le checkout
+ * 4️⃣ — Afficher dans le panier et la commande
  */
 add_filter('woocommerce_get_item_data', function($item_data, $cart_item) {
-    if (isset($cart_item['gravure_image'])) {
-        $item_data[] = array(
-            'name'  => 'Image gravure',
-            'value' => '<a href="' . esc_url($cart_item['gravure_image']) . '" target="_blank">Voir l’image</a>',
-        );
+    $labels = [
+        'gravure_image'         => 'Image gravure',
+        'gravure_commentaire'   => 'Message client',
+        'gravure_amelioration'  => 'Amélioration photo (+3€)',
+        'gravure_texte_dos'     => 'Texte sur photo/dos (+3€)',
+        'gravure_dimension'     => 'Dimension',
+        'gravure_cadre'         => 'Cadre',
+        'gravure_cadeau'        => 'Emballage cadeau (+1€)',
+        'gravure_message_cadeau'=> 'Message cadeau 💌',
+    ];
+
+    foreach ($labels as $key => $label) {
+        if (!empty($cart_item[$key])) {
+            $value = $cart_item[$key];
+            if ($key === 'gravure_image') {
+                $value = '<a href="' . esc_url($value) . '" target="_blank">Voir l’image</a>';
+            }
+            $item_data[] = [
+                'name'  => esc_html($label),
+                'value' => wp_kses_post($value),
+            ];
+        }
     }
+
     return $item_data;
 }, 10, 2);
 
+
+
 /**
- * 5️⃣ — Sauvegarde de l’image dans la commande
+ * 5️⃣ — Sauvegarde des métadonnées dans la commande
  */
 add_action('woocommerce_add_order_item_meta', function($item_id, $values) {
-    if (isset($values['gravure_image'])) {
-        wc_add_order_item_meta($item_id, 'Image gravure', $values['gravure_image']);
+    $fields = [
+        'gravure_image'         => 'Image gravure',
+        'gravure_commentaire'   => 'Message client',
+        'gravure_amelioration'  => 'Amélioration photo (+3€)',
+        'gravure_texte_dos'     => 'Texte sur photo/dos (+3€)',
+        'gravure_dimension'     => 'Dimension',
+        'gravure_cadre'         => 'Cadre',
+        'gravure_cadeau'        => 'Emballage cadeau (+1€)',
+        'gravure_message_cadeau'=> 'Message cadeau 💌',
+    ];
+
+    foreach ($fields as $key => $label) {
+        if (!empty($values[$key])) {
+            wc_add_order_item_meta($item_id, $label, $values[$key]);
+        }
     }
 }, 10, 2);
 
@@ -310,3 +455,220 @@ function redirect_exact_content_match() {
     }
 }
 add_action('template_redirect', 'redirect_exact_content_match');
+
+
+
+function mon_theme_scripts() {
+  wp_enqueue_script(
+    'theme-header-js',
+    get_template_directory_uri() . '/assets/js/header.js',
+    array(),
+    null,
+    true
+  );
+}
+add_action('wp_enqueue_scripts', 'mon_theme_scripts');
+
+function add_search_body_class( $classes ) {
+    if ( is_search() && is_woocommerce() ) {
+        $classes[] = 'search-woocommerce-page';
+    }
+    return $classes;
+}
+add_filter( 'body_class', 'add_search_body_class' );
+
+/* -----------------------------------------------------------
+   🪵 FICHE PRODUIT : PLAQUE DE PRÉNOM (ID = 204)
+   ----------------------------------------------------------- */
+
+/**
+ * 1️⃣ — Afficher les champs personnalisés sur la fiche produit
+ */
+add_action('woocommerce_before_add_to_cart_button', function() {
+    global $product;
+
+    if ($product->get_id() == 204) {
+        ?>
+        <div class="plaque-prenom-options" style="margin-bottom:25px;">
+
+            <!-- 🧾 Prénom à graver -->
+            <label for="prenom_gravure"><strong>🔤 Prénom à graver :</strong></label><br>
+            <input type="text" name="prenom_gravure" id="prenom_gravure" placeholder="Ex : Emma" required />
+
+            <br><br>
+
+            <!-- 💬 Message sous le prénom -->
+            <label for="message_plaque"><strong>💬 Message (optionnel) :</strong></label><br>
+            <input type="text" name="message_plaque" id="message_plaque" placeholder="Ex : Pour toujours dans nos cœurs" />
+
+            <hr style="margin:15px 0;">
+
+            <!-- ✍️ Choix police (libre) -->
+<label for="police_plaque"><strong>✍️ Choisissez la police d’écriture :</strong></label><br>
+
+<div class="champ-police">
+  <input list="fonts_list" name="police_plaque" id="police_plaque" placeholder="Ex : Poppins, Roboto, Dancing Script" value="Poppins" autocomplete="off" />
+
+</div>
+
+<datalist id="fonts_list">
+  <option value="Poppins">
+  <option value="Roboto">
+  <option value="Montserrat">
+  <option value="Lato">
+  <option value="Oswald">
+  <option value="Raleway">
+  <option value="Dancing Script">
+  <option value="Playfair Display">
+  <option value="Open Sans">
+  <option value="Merriweather">
+  <option value="Nunito">
+  <option value="Bebas Neue">
+  <option value="Caveat">
+  <option value="Pacifico">
+  <option value="Lobster">
+  <option value="Indie Flower">
+  <option value="Fjalla One">
+  <option value="Amatic SC">
+  <option value="Abril Fatface">
+  <option value="Comfortaa">
+  <option value="Arvo">
+  <option value="Teko">
+  <option value="Anton">
+  <option value="Cormorant Garamond">
+  <option value="Exo 2">
+  <option value="Inconsolata">
+  <option value="Kalam">
+  <option value="Lobster Two">
+  <option value="Maven Pro">
+  <option value="Noto Sans">
+  <option value="Orbitron">
+  <option value="Patua One">
+  <option value="Permanent Marker">
+  <option value="Quicksand">
+  <option value="Righteous">
+  <option value="Rubik">
+  <option value="Satisfy">
+  <option value="Shadows Into Light">
+  <option value="Signika">
+  <option value="Tangerine">
+  <option value="Titillium Web">
+  <option value="Ubuntu">
+  <option value="Varela Round">
+  <option value="Zilla Slab">
+  <!-- … tu peux en ajouter encore, jusqu’à ~300 sans problème -->
+</datalist>
+
+<small style="display:block;margin-top:6px;color:#666;">
+  Tapez le nom d’une police Google Fonts (ex : <em>Poppins</em>). Si la police existe, elle sera chargée et appliquée à l’aperçu.
+</small>
+
+
+            <br><br>
+
+            <!-- 🔠 Taille police -->
+            <label for="taille_police"><strong>🔠 Taille du texte :</strong></label><br>
+            <select name="taille_police" id="taille_police">
+                <option value="small">Petite</option>
+                <option value="medium" selected>Moyenne</option>
+                <option value="large">Grande</option>
+                <option value="xlarge">Très grande</option>
+            </select>
+
+            <hr style="margin:15px 0;">
+
+            <!-- 📏 Épaisseur -->
+            <label><strong>📏 Choisissez l’épaisseur :</strong></label><br>
+            <label><input type="radio" name="epaisseur_plaque" value="0.2" checked> 0.2 cm</label><br>
+            <label><input type="radio" name="epaisseur_plaque" value="0.5"> 0.5 cm</label>
+
+            <hr style="margin:15px 0;">
+
+            <!-- 🧮 Simulateur -->
+            <div class="simulateur-plaque">
+                <h4>🧮 Aperçu du rendu :</h4>
+                <div id="preview_plaque" style="
+                    margin-top:10px;
+                    padding:20px;
+                    text-align:center;
+                    border:2px dashed #ccc;
+                    border-radius:10px;
+                    background:#f8f8f8;
+                    font-family:'Poppins', sans-serif;
+                    font-size:24px;
+                    transition: all 0.3s ease;">
+                    Votre texte s’affichera ici
+                </div>
+            </div>
+
+        </div>
+        <?php
+    }
+});
+
+/**
+ * 2️⃣ — Sauvegarde des données dans le panier
+ */
+add_filter('woocommerce_add_cart_item_data', function($cart_item_data, $product_id) {
+
+    if ($product_id == 204) {
+        $fields = [
+            'prenom_gravure',
+            'message_plaque',
+            'police_plaque',
+            'taille_police',
+            'epaisseur_plaque',
+        ];
+
+        foreach ($fields as $field) {
+            if (!empty($_POST[$field])) {
+                $cart_item_data[$field] = sanitize_text_field($_POST[$field]);
+            }
+        }
+    }
+
+    return $cart_item_data;
+}, 10, 2);
+
+/**
+ * 3️⃣ — Affichage des infos dans le panier et la commande
+ */
+add_filter('woocommerce_get_item_data', function($item_data, $cart_item) {
+    $labels = [
+        'prenom_gravure'   => 'Prénom à graver',
+        'message_plaque'   => 'Message',
+        'police_plaque'    => 'Police d’écriture',
+        'taille_police'    => 'Taille du texte',
+        'epaisseur_plaque' => 'Épaisseur (cm)',
+    ];
+
+    foreach ($labels as $key => $label) {
+        if (!empty($cart_item[$key])) {
+            $item_data[] = [
+                'name'  => esc_html($label),
+                'value' => esc_html($cart_item[$key]),
+            ];
+        }
+    }
+
+    return $item_data;
+}, 10, 2);
+
+/**
+ * 4️⃣ — Sauvegarde dans les métadonnées de commande
+ */
+add_action('woocommerce_add_order_item_meta', function($item_id, $values) {
+    $fields = [
+        'prenom_gravure'   => 'Prénom à graver',
+        'message_plaque'   => 'Message',
+        'police_plaque'    => 'Police d’écriture',
+        'taille_police'    => 'Taille du texte',
+        'epaisseur_plaque' => 'Épaisseur (cm)',
+    ];
+
+    foreach ($fields as $key => $label) {
+        if (!empty($values[$key])) {
+            wc_add_order_item_meta($item_id, $label, $values[$key]);
+        }
+    }
+}, 10, 2);

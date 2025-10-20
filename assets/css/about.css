@@ -4,7 +4,7 @@
 .separateur {
   width: 50%; /* Largeur du séparateur */
   height: 10px; /* Épaisseur */
-  background-image: url('/images/fond_header.jpg'); /* Texture bois */
+  background-image: url('../img/fond_header.jpg'); /* Texture bois */
   margin: var(--spacing-lg) auto; /* Centré avec marge verticale */
 }
 
@@ -68,6 +68,7 @@
 /* --- Image --- */
 .qui_sommes_nous .image {
   width: 50%;
+  height: 25rem;
   display: flex;
   justify-content: center;
   align-items: center;

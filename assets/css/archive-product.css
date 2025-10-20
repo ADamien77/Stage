@@ -39,9 +39,9 @@
 .products .cards {
   display: grid; /* Mise en grille */
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Colonnes adaptatives */
-  gap: var(--spacing-xl); /* Espacement entre les cartes */
+  gap: 7rem; /* Espacement entre les cartes */
   margin: auto;
-  max-width: 1300px; /* Largeur max de la grille */
+  max-width: 1400px; /* Largeur max de la grille */
 }
 
 /* =======================
@@ -52,6 +52,7 @@
   flex-direction: column;
   justify-content: space-between; /* Titre/description en haut, prix/bouton en bas */
   min-height: 37rem; 
+  width: 100%;
   padding: var(--spacing-sm);
   margin: var(--spacing-sm) auto;
   background-color: var(--color-white);
@@ -95,14 +96,31 @@
   justify-content: flex-start;
 }
 
-.products .card .avis {
-  margin-bottom: var(--spacing-sm); /* Marge sous les avis clients */
-}
-
 .products .card .description p {
   line-height: var(--spacing-md);
   text-align: justify; /* Texte justifié */
 }
+
+/* =======================
+   ⭐ AVIS PRODUITS (étoiles)
+   ======================= */
+
+/* Cible la note WooCommerce */
+.products .card .avis .star-rating {
+  position: relative;
+  font-size: 1.8rem; 
+}
+
+
+/* Réaffiche uniquement les étoiles avec un style ajusté */
+.products .card .avis .star-rating::before,
+.products .card .avis .star-rating span::before {
+  color: #f5b301;
+  font-size: 1.7rem; 
+  letter-spacing: 3px;
+}
+
+
 
 /* =======================
    PRIX + BOUTON

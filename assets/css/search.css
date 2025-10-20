@@ -2,14 +2,15 @@
    🎯 STYLES — PAGE DE RECHERCHE
    ============================================================ */
 
-section.search {
-  padding: 60px 5%;
+
+.search-section {
+  padding: var(--spacing-md) var(--spacing-xl);
   background: #f9f9f9;
   min-height: 80vh;
 }
 
 /* Titre de la recherche */
-.search-title {
+.search .search-title {
   font-size: 2rem;
   font-weight: 600;
   margin-bottom: 40px;
@@ -18,14 +19,14 @@ section.search {
 }
 
 /* Grille des résultats */
-.cards {
+.search .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 30px;
 }
 
 /* Carte individuelle */
-.card {
+.search .card {
   background: #fff;
   border-radius: 16px;
   overflow: hidden;
@@ -35,65 +36,65 @@ section.search {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.card:hover {
+.search .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
 }
 
 /* Image */
-.card .image {
+.search .card .image {
   width: 100%;
   aspect-ratio: 4/3;
   background: #f0f0f0;
   overflow: hidden;
 }
 
-.card .image img {
+.search .card .image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
 
-.card:hover .image img {
+.search .card:hover .image img {
   transform: scale(1.05);
 }
 
 /* Contenu de la carte */
-.card .contenu {
+.search .card .contenu {
   flex: 1;
   padding: 20px;
 }
 
-.card .contenu h3 {
+.search .card .contenu h3 {
   font-size: 1.1rem;
   color: #222;
   margin-bottom: 10px;
 }
 
-.card .contenu h3 a {
+.search .card .contenu h3 a {
   color: inherit;
   text-decoration: none;
 }
 
-.card .contenu h3 a:hover {
+.search .card .contenu h3 a:hover {
   color: #0073aa;
 }
 
 /* Avis WooCommerce */
-.card .avis {
+.search .card .avis {
   margin-bottom: 10px;
 }
 
 /* Description / Extrait */
-.card .description {
+.search .card .description {
   color: #666;
   font-size: 0.95rem;
   line-height: 1.5;
 }
 
 /* Bas de carte : prix + bouton */
-.card .prix_bouton {
+.search .card .prix_bouton {
   border-top: 1px solid #eee;
   padding: 15px 20px;
   display: flex;
@@ -102,7 +103,7 @@ section.search {
   background: #fafafa;
 }
 
-.card .prix p {
+.search .card .prix p {
   margin: 0;
   font-weight: 600;
   color: #111;
@@ -110,7 +111,7 @@ section.search {
 }
 
 /* Boutons */
-.card .bouton a {
+.search .card .bouton a {
   display: inline-block;
   padding: 8px 16px;
   border-radius: 6px;
@@ -121,12 +122,12 @@ section.search {
   transition: background 0.3s ease;
 }
 
-.card .bouton a:hover {
+.search .card .bouton a:hover {
   background-color: #005f87;
 }
 
 /* Message "Aucun résultat" */
-.search p {
+.search .cards p {
   text-align: center;
   font-size: 1rem;
   color: #555;
@@ -135,13 +136,13 @@ section.search {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .search-title {
+  .search .search-title {
     font-size: 1.6rem;
   }
-  .card .contenu {
+  .search .card .contenu {
     padding: 15px;
   }
-  .card .prix_bouton {
+  .search .card .prix_bouton {
     flex-direction: column;
     gap: 10px;
     text-align: center;

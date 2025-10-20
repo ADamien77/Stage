@@ -302,6 +302,29 @@
   font-size: var(--font-size-base);
 }
 
+.nouveautes .avis .star-rating {
+  display: inline-block; 
+  font-size: 1.8rem;       
+  position: relative;
+  color: #ccc;
+}
+
+
+.nouveautes .avis .star-rating::before,
+.nouveautes .avis .star-rating span::before {
+  content: "★★★★★";
+  letter-spacing: 3px;
+}
+
+.nouveautes .avis .star-rating span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  color: #ffbf00;
+}
+
 
 /* ===================================
    💡 SECTION CONSEILS
@@ -434,7 +457,6 @@
 .mur_temoignages .temoignages .card .text h3 {
   /* Nom client */
   font-size: var(--font-size-h3);
-  margin-bottom: var(--spacing-md);
 }
 
 .mur_temoignages .temoignages .card .text .avis {
@@ -448,6 +470,33 @@
   line-height: var(--spacing-md);
   text-align: justify;
   font-size: var(--font-size-base);
+}
+
+/* ===================================
+   🌟 STYLE DES ÉTOILES - MUR TÉMOIGNAGES
+   =================================== */
+.mur_temoignages .avis .star-rating {
+  display: inline-block; 
+  font-size: 2rem;      
+  position: relative;
+  color: #ccc;
+  margin: 0.5rem 0;
+  letter-spacing: 4px;   
+}
+
+.mur_temoignages .avis .star-rating::before,
+.mur_temoignages .avis .star-rating span::before {
+  content: "★★★★★";
+  letter-spacing: 4px;
+}
+
+.mur_temoignages .avis .star-rating span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  color: #ffbf00;
 }
 
 /* ===================================

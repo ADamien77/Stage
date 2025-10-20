@@ -43,15 +43,14 @@
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-md);
-
   width: 40%;
   margin: var(--spacing-md);
 }
 
 /* ✅ Image principale (cadre fixe) */
 .image_principale {
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 500px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,7 +60,7 @@
 .image_principale img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* conserve le ratio et rogne si besoin */
+  object-fit: contain; 
 }
 
 /* ✅ Galerie secondaire */
@@ -132,34 +131,21 @@
 }
 
 /* ===============================
-   ⭐ Style étoiles WooCommerce
+   🌟 STYLE DES ÉTOILES
    =============================== */
-.star-rating {
-  font-size: 1.5rem; /* taille des étoiles */
-  line-height: 1;
+.product_sheet .contenu .description .avis .star-rating {
+  font-size: 2rem;
   position: relative;
-  display: inline-block;
-  font-family: "WooCommerce", "Arial", sans-serif;
-  width: 6.4em; /* largeur fixe */
-  height: 1em;
-  overflow: hidden;
 }
 
-.star-rating::before {
-  content: "★★★★★"; /* étoiles vides */
-  color: #ccc; /* gris pour vide */
-  position: absolute;
-  top: 0;
-  left: 0;
+
+.product_sheet .contenu .description .avis .star-rating::before,
+.product_sheet .contenu .description .avis .star-rating span::before {
+  color: #f5b301;
+  font-size: 1.7rem; 
+  letter-spacing: 3px;
 }
 
-.star-rating span::before {
-  content: "★★★★★"; /* étoiles pleines */
-  color: gold; /* doré pour rempli */
-  position: absolute;
-  top: 0;
-  left: 0;
-}
 
 /* ✅ Prix + bouton panier */
 .description .prix_bouton {
@@ -181,7 +167,7 @@
   justify-content: center;
   text-decoration: none;
   color: var(--color-white);
-  background-color: green;
+  background-color: green !important;
   border-radius: 10px;
   padding: 1rem 2rem;
   font-weight: bold;

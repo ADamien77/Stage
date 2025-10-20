@@ -145,3 +145,142 @@ function initProductGallery() {
     });
   });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  const accountIcon = document.getElementById('account-icon');
+  const mobileMenu = document.getElementById('mobile-account-menu');
+
+  if (!accountIcon || !mobileMenu) return;
+
+  accountIcon.addEventListener('click', function(e) {
+    if (window.innerWidth <= 1024) { // Mobile/tablette
+      e.preventDefault();
+      mobileMenu.classList.toggle('active');
+    }
+    // sinon, comportement normal : lien vers la page Mon Compte
+  });
+
+  // Fermer le menu si clic à l’extérieur
+  document.addEventListener('click', function(e) {
+    if (
+      mobileMenu.classList.contains('active') &&
+      !mobileMenu.contains(e.target) &&
+      e.target !== accountIcon
+    ) {
+      mobileMenu.classList.remove('active');
+    }
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.querySelector('form.cart');
+  const fileInput = document.getElementById('gravure_image');
+  const uploadMsg = document.getElementById('upload_message');
+
+  // Si le champ existe (produit gravure)
+  if (fileInput) {
+
+    // ✅ Affiche un message quand l’image est sélectionnée
+    fileInput.addEventListener('change', function() {
+      if (this.files.length > 0) uploadMsg.style.display = 'block';
+      else uploadMsg.style.display = 'none';
+    });
+
+    // ✅ Bloque l’ajout au panier si aucune image
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        if (fileInput.files.length === 0) {
+          e.preventDefault();
+          alert("⚠️ Merci de téléverser une image avant d’ajouter le produit au panier.");
+          fileInput.focus();
+        }
+      });
+    }
+  }
+});
+
+/* -----------------------------------------------------------
+   🎨 Simulateur : chargement dynamique d'une Google Font choisie
+   ----------------------------------------------------------- */
+
+document.addEventListener('DOMContentLoaded', function() {
+  const prenomInput = document.getElementById('prenom_gravure');
+  const messageInput = document.getElementById('message_plaque');
+  const policeInput = document.getElementById('police_plaque'); // maintenant input libre
+  const tailleSelect = document.getElementById('taille_police');
+  const preview = document.getElementById('preview_plaque');
+
+  // Garde trace du <link> injecté pour éviter duplications
+  let currentFontLinkId = 'dynamic-google-font';
+
+  // Fonction qui injecte (ou remplace) le link Google Fonts dans le head
+  function loadGoogleFont(family) {
+    if (!family) return;
+
+    // Normalise le nom pour l'URL Google Fonts : remplace les espaces par +
+    const familyForUrl = family.trim().replace(/\s+/g, '+');
+
+    const href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(familyForUrl)}:wght@400;700&display=swap`;
+
+    // Supprime l'ancien link si existant
+    const existing = document.getElementById(currentFontLinkId);
+    if (existing) existing.parentNode.removeChild(existing);
+
+    // Crée un nouveau link
+    const link = document.createElement('link');
+    link.id = currentFontLinkId;
+    link.rel = 'stylesheet';
+    link.href = href;
+    document.head.appendChild(link);
+
+    // Note : si la police n'existe pas sur Google Fonts, le navigateur utilisera le fallback.
+  }
+
+  // Met à jour l'aperçu : police, taille, prénom, message
+  function updatePreview() {
+    if (!preview) return;
+
+    const prenom = prenomInput && prenomInput.value ? prenomInput.value : 'Votre texte ici';
+    const message = messageInput && messageInput.value ? `<br><small>${escapeHtml(messageInput.value)}</small>` : '';
+    const police = policeInput && policeInput.value ? policeInput.value.trim() : 'Poppins';
+    const taille = tailleSelect && tailleSelect.value ? tailleSelect.value : 'medium';
+
+    // Charge la police dynamiquement depuis Google Fonts
+    if (police) loadGoogleFont(police);
+
+    // Applique la police au preview (avec fallback)
+    preview.style.fontFamily = `'${police}', sans-serif`;
+
+    // Applique la taille
+    let fontSize = '24px';
+    if (taille === 'small') fontSize = '18px';
+    if (taille === 'medium') fontSize = '24px';
+    if (taille === 'large') fontSize = '32px';
+    if (taille === 'xlarge') fontSize = '40px';
+    preview.style.fontSize = fontSize;
+
+    // Affiche
+    preview.innerHTML = `${escapeHtml(prenom)}${message}`;
+  }
+
+  // Petit utilitaire pour échapper le HTML (sécurité)
+  function escapeHtml(text) {
+    const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    };
+    return String(text).replace(/[&<>"']/g, function(m) { return map[m]; });
+  }
+
+  // Écouteurs : entrée texte, police, taille
+  [prenomInput, messageInput, policeInput, tailleSelect].forEach(el => {
+    if (el) el.addEventListener('input', updatePreview);
+  });
+
+  // Initialisation
+  updatePreview();
+});
+
