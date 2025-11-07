@@ -5,7 +5,7 @@ get_header();
     <?php
     while ( have_posts() ) :
         the_post();
-        the_content(); // c’est là que Woo injecte le shortcode
+        the_content(); //  Woo injecte le shortcode
     endwhile;
     ?>
 </main>

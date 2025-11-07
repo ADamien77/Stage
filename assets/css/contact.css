@@ -70,7 +70,7 @@
   position: absolute;
   inset: 0;
   background: 
-    linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
+    linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)),
     url("../img/fond_de_bois_1.jpg") center/cover;
   z-index: -1; /* place le fond derrière le contenu */
 }

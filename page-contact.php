@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_contact'])) {
     $email   = sanitize_email($_POST['email']);
     $message = sanitize_textarea_field($_POST['message']);
 
-    // Destinataire : l’admin WordPress (tu peux changer si besoin)
+    // Destinataire : l’admin WordPress 
     $to      = get_option('admin_email');
     $subject = "Nouveau message de contact - {$nom} {$prenom}";
     $body    = "Nom : $nom\nPrénom : $prenom\nEmail : $email\n\nMessage :\n$message";

@@ -1,194 +1,234 @@
-// ======================================================
-// ⚡ Script principal du thème
-// - Gère le header (burger + recherche + sous-menus)
-// - Gère la galerie produit (image principale + miniatures)
-// ======================================================
+/* ======================================================
+   ⚡ Script principal du thème
+   ------------------------------------------------------
+   - Header : burger, recherche, sous-menus
+   - Galerie produit : image principale + miniatures
+   - Menu "Mon compte" mobile
+   - Gestion gravure : image, texte, polices, options
+   - Prix dynamiques sur les produits gravure
+   ====================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
-  initHeaderEvents();   // Gestion du burger + overlay recherche
-  initSubmenus();       // Gestion des sous-menus
-  initProductGallery(); // Gestion de la galerie produit
-});
 
+  /* ======================================================
+     🔹 1. Header : burger + overlay recherche
+     ====================================================== */
+  function initHeaderEvents() {
+    const searchToggle  = document.querySelector(".search-toggle");   // Bouton loupe
+    const searchOverlay = document.querySelector(".search-overlay");  // Overlay recherche
+    const burger        = document.querySelector(".burger");          // Bouton burger
+    const nav           = document.querySelector("nav");              // Menu principal
 
-// ======================================================
-// 🔹 1. Gestion du burger et de la recherche overlay
-// ======================================================
-function initHeaderEvents() {
-  const searchToggle   = document.querySelector(".search-toggle");  // Bouton loupe
-  const searchOverlay  = document.querySelector(".search-overlay"); // Overlay recherche
-  const burger         = document.querySelector(".burger");         // Bouton burger
-  const nav            = document.querySelector("nav");             // Navigation principale
+    // Toggle overlay recherche (mobile)
+    if (searchToggle && searchOverlay) {
+      searchToggle.addEventListener("click", (e) => {
+        e.preventDefault();
+        searchOverlay.classList.toggle("active");
+      });
+    }
 
-  // Toggle overlay recherche (mobile)
-  if (searchToggle && searchOverlay) {
-    searchToggle.addEventListener("click", (e) => {
-      e.preventDefault();
-      searchOverlay.classList.toggle("active"); // affiche/masque l’overlay
+    // Toggle menu burger (mobile)
+    if (burger && nav) {
+      burger.addEventListener("click", () => {
+        burger.classList.toggle("active");
+        nav.classList.toggle("open");
+      });
+    }
+  }
+
+  /* ======================================================
+     🔹 2. Navigation : sous-menus
+     ====================================================== */
+  function initSubmenus() {
+    const submenuParents = document.querySelectorAll("nav .menu-item-has-children");
+
+    submenuParents.forEach((parent) => {
+      const link = parent.querySelector("a");
+
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        // Ferme les autres sous-menus
+        submenuParents.forEach((other) => {
+          if (other !== parent) other.classList.remove("open");
+        });
+
+        // Ouvre/ferme celui cliqué
+        parent.classList.toggle("open");
+      });
+    });
+
+    // Ferme si clic à l’extérieur
+    document.addEventListener("click", (e) => {
+      const nav = document.querySelector("nav");
+      if (nav && !nav.contains(e.target)) {
+        submenuParents.forEach((parent) => parent.classList.remove("open"));
+      }
     });
   }
 
-  // Toggle menu burger (mobile)
-  if (burger && nav) {
-    burger.addEventListener("click", () => {
-      burger.classList.toggle("active"); // animation du burger
-      nav.classList.toggle("open");      // ouverture/fermeture nav
+  /* ======================================================
+     🔹 3. Galerie produit : image principale + miniatures
+     ====================================================== */
+  function initProductGallery() {
+    const galerie   = document.querySelector(".images_secondaires .track");
+    const mainImage = document.querySelector(".image_principale img");
+    if (!galerie || !mainImage) return;
+
+    galerie.querySelectorAll(".thumb").forEach((thumb) => {
+      const thumbImg = thumb.querySelector("img");
+      thumb.addEventListener("click", () => {
+        if (!thumbImg) return;
+
+        // Sauvegarde des sources actuelles
+        const oldSrc = mainImage.getAttribute("src");
+        const oldSrcset = mainImage.getAttribute("srcset");
+        const newSrc = thumbImg.getAttribute("src");
+        const newSrcset = thumbImg.getAttribute("srcset");
+
+        // Échange image principale ↔ miniature
+        mainImage.setAttribute("src", newSrc);
+        if (newSrcset) mainImage.setAttribute("srcset", newSrcset);
+        else mainImage.removeAttribute("srcset");
+
+        thumbImg.setAttribute("src", oldSrc);
+        if (oldSrcset) thumbImg.setAttribute("srcset", oldSrcset);
+        else thumbImg.removeAttribute("srcset");
+      });
     });
   }
-}
 
+  /* ======================================================
+     🔹 4. Menu "Mon compte" mobile
+     ====================================================== */
+  function initAccountMenu() {
+    const accountIcon = document.getElementById("account-icon");
+    const mobileMenu = document.getElementById("mobile-account-menu");
+    if (!accountIcon || !mobileMenu) return;
 
-// ======================================================
-// 🔹 2. Gestion des sous-menus (au clic)
-// ======================================================
-function initSubmenus() {
-  const submenuParents = document.querySelectorAll("nav .menu-item-has-children");
+    accountIcon.addEventListener("click", function(e) {
+      if (window.innerWidth <= 1024) { // Mobile/tablette
+        e.preventDefault();
+        mobileMenu.classList.toggle("active");
+      }
+    });
 
-  // Ouverture / fermeture au clic
-  submenuParents.forEach((parent) => {
-    const link = parent.querySelector("a");
+    // Fermer si clic à l’extérieur
+    document.addEventListener("click", function(e) {
+      if (
+        mobileMenu.classList.contains("active") &&
+        !mobileMenu.contains(e.target) &&
+        e.target !== accountIcon
+      ) {
+        mobileMenu.classList.remove("active");
+      }
+    });
+  }
 
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
+  /* ======================================================
+     🔹 5. Upload image gravure
+     ====================================================== */
+  function initFileUpload() {
+    const form = document.querySelector("form.cart");
+    const fileInput = document.getElementById("gravure_image");
+    const uploadMsg = document.getElementById("upload_message");
 
-      // Ferme tous les autres sous-menus
-      submenuParents.forEach((other) => {
-        if (other !== parent) other.classList.remove("open");
+    if (fileInput) {
+      fileInput.addEventListener("change", function() {
+        uploadMsg.style.display = this.files.length > 0 ? "block" : "none";
       });
 
-      // Ouvre/ferme le sous-menu cliqué
-      parent.classList.toggle("open");
-    });
-  });
-
-  // Ferme tous les sous-menus si clic en dehors de la nav
-  document.addEventListener("click", (e) => {
-    const nav = document.querySelector("nav");
-    if (nav && !nav.contains(e.target)) {
-      submenuParents.forEach((parent) => parent.classList.remove("open"));
-    }
-  });
-}
-
-
-// ======================================================
-// 🔹 3. Utilitaires pour animations (slideUp / slideDown)
-// ======================================================
-function slideDown(element) {
-  if (!element) return;
-
-  element.style.display = "block";                  // rendre visible
-  const height = element.scrollHeight + "px";       // récupérer hauteur
-  element.style.maxHeight = "0";                    // départ fermé
-  element.offsetHeight;                             // forcer reflow
-  element.style.transition = "max-height 0.3s ease";
-  element.style.maxHeight = height;                 // ouverture animée
-
-  // Après animation, reset max-height
-  element.addEventListener("transitionend", function handler() {
-    element.style.maxHeight = "none";
-    element.removeEventListener("transitionend", handler);
-  });
-}
-
-function slideUp(element) {
-  if (!element) return;
-
-  element.style.maxHeight = element.scrollHeight + "px"; // départ ouvert
-  element.offsetHeight;                                  // forcer reflow
-  element.style.transition = "max-height 0.3s ease";
-  element.style.maxHeight = "0";                         // fermeture animée
-
-  element.addEventListener("transitionend", function handler() {
-    element.style.display = "none"; // cacher après animation
-    element.removeEventListener("transitionend", handler);
-  });
-}
-
-
-// ======================================================
-// 🔹 4. Galerie produit (image principale + miniatures)
-// ======================================================
-function initProductGallery() {
-  const galerie   = document.querySelector(".images_secondaires .track"); // conteneur des miniatures
-  const mainImage = document.querySelector(".image_principale img");      // image principale
-
-  if (!galerie || !mainImage) return;
-
-  // ✅ Clic sur miniature => met en image principale
-  galerie.querySelectorAll(".thumb").forEach((thumb) => {
-    const thumbImg = thumb.querySelector("img");
-
-    thumb.addEventListener("click", () => {
-      if (!thumbImg) return;
-
-      // Sauvegarde des sources actuelles
-      const oldSrc    = mainImage.getAttribute("src");
-      const oldSrcset = mainImage.getAttribute("srcset");
-      const newSrc    = thumbImg.getAttribute("src");
-      const newSrcset = thumbImg.getAttribute("srcset");
-
-      // ⚡ Swap (échange image principale <-> miniature)
-      mainImage.setAttribute("src", newSrc);
-      if (newSrcset) {
-        mainImage.setAttribute("srcset", newSrcset);
-      } else {
-        mainImage.removeAttribute("srcset");
+      if (form) {
+        form.addEventListener("submit", function(e) {
+          if (fileInput.files.length === 0) {
+            e.preventDefault();
+            alert("⚠️ Merci de téléverser une image avant d’ajouter le produit au panier.");
+            fileInput.focus();
+          }
+        });
       }
-
-      thumbImg.setAttribute("src", oldSrc);
-      if (oldSrcset) {
-        thumbImg.setAttribute("srcset", oldSrcset);
-      } else {
-        thumbImg.removeAttribute("srcset");
-      }
-    });
-  });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  const accountIcon = document.getElementById('account-icon');
-  const mobileMenu = document.getElementById('mobile-account-menu');
-
-  if (!accountIcon || !mobileMenu) return;
-
-  accountIcon.addEventListener('click', function(e) {
-    if (window.innerWidth <= 1024) { // Mobile/tablette
-      e.preventDefault();
-      mobileMenu.classList.toggle('active');
     }
-    // sinon, comportement normal : lien vers la page Mon Compte
-  });
+  }
 
-  // Fermer le menu si clic à l’extérieur
-  document.addEventListener('click', function(e) {
-    if (
-      mobileMenu.classList.contains('active') &&
-      !mobileMenu.contains(e.target) &&
-      e.target !== accountIcon
-    ) {
-      mobileMenu.classList.remove('active');
+  /* ======================================================
+     🔹 6. Simulateur de gravure (texte + police)
+     ====================================================== */
+  function initFontPreview() {
+    const prenomInput = document.getElementById("prenom_gravure");
+    const messageInput = document.getElementById("message_plaque");
+    const policeInput = document.getElementById("police_plaque");
+    const tailleSelect = document.getElementById("taille_police");
+    const preview = document.getElementById("preview_plaque");
+    let currentFontLinkId = "dynamic-google-font";
+
+    function loadGoogleFont(family) {
+      if (!family) return;
+      const familyForUrl = family.trim().replace(/\s+/g, "+");
+      const href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(familyForUrl)}:wght@400;700&display=swap`;
+
+      const existing = document.getElementById(currentFontLinkId);
+      if (existing) existing.remove();
+
+      const link = document.createElement("link");
+      link.id = currentFontLinkId;
+      link.rel = "stylesheet";
+      link.href = href;
+      document.head.appendChild(link);
     }
-  });
-});
 
-document.addEventListener('DOMContentLoaded', function() {
-  const form = document.querySelector('form.cart');
-  const fileInput = document.getElementById('gravure_image');
-  const uploadMsg = document.getElementById('upload_message');
+    function escapeHtml(text) {
+      const map = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" };
+      return String(text).replace(/[&<>"']/g, (m) => map[m]);
+    }
 
-  // Si le champ existe (produit gravure)
-  if (fileInput) {
+    function updatePreview() {
+      if (!preview) return;
 
-    // ✅ Affiche un message quand l’image est sélectionnée
-    fileInput.addEventListener('change', function() {
-      if (this.files.length > 0) uploadMsg.style.display = 'block';
-      else uploadMsg.style.display = 'none';
+      const prenom = prenomInput?.value || "Votre texte ici";
+      const message = messageInput?.value ? `<br><small>${escapeHtml(messageInput.value)}</small>` : "";
+      const police = policeInput?.value?.trim() || "Poppins";
+      const taille = tailleSelect?.value || "medium";
+
+      loadGoogleFont(police);
+      preview.style.fontFamily = `'${police}', sans-serif`;
+
+      const tailles = { small: "18px", medium: "24px", large: "32px", xlarge: "40px" };
+      preview.style.fontSize = tailles[taille] || "24px";
+
+      preview.innerHTML = `${escapeHtml(prenom)}${message}`;
+    }
+
+    [prenomInput, messageInput, policeInput, tailleSelect].forEach((el) => {
+      if (el) el.addEventListener("input", updatePreview);
     });
 
-    // ✅ Bloque l’ajout au panier si aucune image
-    if (form) {
-      form.addEventListener('submit', function(e) {
+    updatePreview();
+  }
+
+  /* ======================================================
+     🔹 7. Options cadeau / vérifications
+     ====================================================== */
+  function initGiftOptions() {
+    const fileInput = document.getElementById("gravure_image");
+    const uploadMsg = document.getElementById("upload_message");
+    const cadeauCheckbox = document.getElementById("gravure_cadeau");
+    const zoneMessageCadeau = document.getElementById("zone_message_cadeau");
+    const form = document.querySelector("form.cart");
+
+    if (fileInput) {
+      fileInput.addEventListener("change", function() {
+        if (this.files.length > 0) uploadMsg.style.display = "block";
+      });
+    }
+
+    if (cadeauCheckbox && zoneMessageCadeau) {
+      cadeauCheckbox.addEventListener("change", function() {
+        zoneMessageCadeau.style.display = this.checked ? "block" : "none";
+      });
+    }
+
+    if (form && fileInput) {
+      form.addEventListener("submit", function(e) {
         if (fileInput.files.length === 0) {
           e.preventDefault();
           alert("⚠️ Merci de téléverser une image avant d’ajouter le produit au panier.");
@@ -197,90 +237,81 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
   }
+
+  /* ======================================================
+     🔹 8. Prix dynamiques (options gravure)
+     ====================================================== */
+  function initDynamicPricing() {
+    const form = document.querySelector("form.cart");
+    if (!form) return;
+
+    // ID produit : récupéré depuis plusieurs sources possibles
+    let productId =
+      parseInt(form.dataset.productId) ||
+      parseInt(document.querySelector("#js-product-data")?.dataset.productId) ||
+      parseInt(form.querySelector('input[name="product_id"]')?.value) ||
+      NaN;
+
+    // Élément de prix
+    let priceElement =
+      document.querySelector(".woocommerce-Price-amount bdi") ||
+      document.querySelector(".price .amount") ||
+      document.querySelector(".price");
+
+    if (!priceElement) return;
+
+    function parsePrice(text) {
+      if (!text) return NaN;
+      const cleaned = text.replace(/[^\d.,-]/g, "").replace(/\s/g, "");
+      if (cleaned.includes(",") && cleaned.includes(".")) {
+        return parseFloat(cleaned.replace(/\./g, "").replace(",", "."));
+      }
+      return parseFloat(cleaned.replace(",", "."));
+    }
+
+    const rawPriceText = priceElement.innerText || priceElement.textContent;
+    let basePrice = parsePrice(rawPriceText) || 0;
+
+    // Suppléments spécifiques pour les cadres
+    const cadrePrices = { 202: 2, 217: 3, 219: 4 };
+    const cadreCheckbox = form.querySelector("#gravure_cadre") || form.querySelector('input[name="gravure_cadre"]');
+    const checkboxes = form.querySelectorAll(".champ-gravure input[type='checkbox']");
+
+    function updatePrice() {
+      let total = basePrice;
+
+      if (form.querySelector('input[name="gravure_amelioration"]:checked')) total += 3;
+      if (form.querySelector('input[name="gravure_texte_dos"]:checked')) total += 3;
+      if (form.querySelector('input[name="gravure_cadeau"]:checked')) total += 1;
+
+      if (cadreCheckbox?.checked) {
+        const add = cadrePrices[productId] ?? 2;
+        total += add;
+      }
+
+      const formatted = total.toFixed(2).replace(".", ",") + " €";
+      const innerBdi = priceElement.querySelector("bdi");
+      if (innerBdi) innerBdi.textContent = formatted;
+      else priceElement.textContent = formatted;
+    }
+
+    if (checkboxes.length) {
+      checkboxes.forEach((box) => box.addEventListener("change", updatePrice));
+    } else {
+      form.addEventListener("change", updatePrice);
+    }
+
+    updatePrice();
+  }
+
+  // Initialisation des fonctions
+  initHeaderEvents();
+  initSubmenus();
+  initProductGallery();
+  initAccountMenu();
+  initFileUpload();
+  initFontPreview();
+  initGiftOptions();
+  initDynamicPricing();
+
 });
-
-/* -----------------------------------------------------------
-   🎨 Simulateur : chargement dynamique d'une Google Font choisie
-   ----------------------------------------------------------- */
-
-document.addEventListener('DOMContentLoaded', function() {
-  const prenomInput = document.getElementById('prenom_gravure');
-  const messageInput = document.getElementById('message_plaque');
-  const policeInput = document.getElementById('police_plaque'); // maintenant input libre
-  const tailleSelect = document.getElementById('taille_police');
-  const preview = document.getElementById('preview_plaque');
-
-  // Garde trace du <link> injecté pour éviter duplications
-  let currentFontLinkId = 'dynamic-google-font';
-
-  // Fonction qui injecte (ou remplace) le link Google Fonts dans le head
-  function loadGoogleFont(family) {
-    if (!family) return;
-
-    // Normalise le nom pour l'URL Google Fonts : remplace les espaces par +
-    const familyForUrl = family.trim().replace(/\s+/g, '+');
-
-    const href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(familyForUrl)}:wght@400;700&display=swap`;
-
-    // Supprime l'ancien link si existant
-    const existing = document.getElementById(currentFontLinkId);
-    if (existing) existing.parentNode.removeChild(existing);
-
-    // Crée un nouveau link
-    const link = document.createElement('link');
-    link.id = currentFontLinkId;
-    link.rel = 'stylesheet';
-    link.href = href;
-    document.head.appendChild(link);
-
-    // Note : si la police n'existe pas sur Google Fonts, le navigateur utilisera le fallback.
-  }
-
-  // Met à jour l'aperçu : police, taille, prénom, message
-  function updatePreview() {
-    if (!preview) return;
-
-    const prenom = prenomInput && prenomInput.value ? prenomInput.value : 'Votre texte ici';
-    const message = messageInput && messageInput.value ? `<br><small>${escapeHtml(messageInput.value)}</small>` : '';
-    const police = policeInput && policeInput.value ? policeInput.value.trim() : 'Poppins';
-    const taille = tailleSelect && tailleSelect.value ? tailleSelect.value : 'medium';
-
-    // Charge la police dynamiquement depuis Google Fonts
-    if (police) loadGoogleFont(police);
-
-    // Applique la police au preview (avec fallback)
-    preview.style.fontFamily = `'${police}', sans-serif`;
-
-    // Applique la taille
-    let fontSize = '24px';
-    if (taille === 'small') fontSize = '18px';
-    if (taille === 'medium') fontSize = '24px';
-    if (taille === 'large') fontSize = '32px';
-    if (taille === 'xlarge') fontSize = '40px';
-    preview.style.fontSize = fontSize;
-
-    // Affiche
-    preview.innerHTML = `${escapeHtml(prenom)}${message}`;
-  }
-
-  // Petit utilitaire pour échapper le HTML (sécurité)
-  function escapeHtml(text) {
-    const map = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#039;'
-    };
-    return String(text).replace(/[&<>"']/g, function(m) { return map[m]; });
-  }
-
-  // Écouteurs : entrée texte, police, taille
-  [prenomInput, messageInput, policeInput, tailleSelect].forEach(el => {
-    if (el) el.addEventListener('input', updatePreview);
-  });
-
-  // Initialisation
-  updatePreview();
-});
-

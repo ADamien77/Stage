@@ -45,12 +45,19 @@
   </div>
   <div class="cards">
     <div class="card_1">
-      <h3>Sous titre h3</h3>
-      <a href="">CTA</a>
+      <h3>Bois et compagnie ou Tabletier d'Art</h3>
+      <?php
+      $cat_link = get_term_link('bois-et-compagnie-ou-tabletier-dart', 'product_cat');
+      ?>
+      <a href="<?php echo esc_url($cat_link); ?>">BOUTIQUE</a>
+
     </div>
     <div class="card_2">
-      <h3>Sous titre h3</h3>
-      <a href="">CTA</a>
+      <h3>Impression photo</h3>
+      <?php
+      $cat_link_impression = get_term_link('impression-photo', 'product_cat');
+      ?>
+      <a href="<?php echo esc_url($cat_link_impression); ?>">BOUTIQUE</a>
     </div>
   </div>
 </section>
@@ -138,17 +145,10 @@
     <h2>Conseils du moment</h2>
     <div class="separateur"></div>
   </div>
+
   <div class="conseil">
-    <h3>Entretenir vos objets en bois pour les garder comme neufs</h3>
-    <p>
-      Les objets en bois artisanaux méritent un entretien régulier pour conserver toute leur beauté.
-      Pour nourrir le bois et le protéger, appliquez de temps en temps une fine couche d’huile naturelle
-      (huile de lin, huile de noix ou cire d’abeille). Cela permet d’éviter le dessèchement, de raviver les couleurs
-      et de prolonger la durée de vie de vos créations en bois fait main.
-      <br><br>
-      Évitez de laisser vos objets en bois au contact prolongé de l’eau ou exposés directement au soleil.
-      Un simple nettoyage doux avec un chiffon sec ou légèrement humide suffit à préserver leur éclat naturel.
-    </p>
+    <h3><?php the_field('titre_conseil'); ?></h3>
+    <p><?php the_field('texte_conseil'); ?></p>
   </div>
   <div class="button">
     <button>NOTRE BLOG</button>
@@ -167,9 +167,9 @@
 
   <div class="temoignages">
     <?php
-    // Récupère les 6 derniers avis WooCommerce approuvés
+    // Récupère les 3 derniers avis WooCommerce approuvés
     $args = array(
-      'number'      => 6,
+      'number'      => 3,
       'status'      => 'approve',
       'post_type'   => 'product',
       'post_status' => 'publish',

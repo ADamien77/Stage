@@ -180,6 +180,13 @@
   background-color: var(--color-secondary);
 }
 
+/* Options */
+.prix_bouton .cart .champ-gravure  {
+  display: flex;
+  flex-direction: column;
+  margin-bottom : var(--spacing-md);
+}
+
 /* ===============================
    ℹ️ INFOS COMPLÉMENTAIRES
    =============================== */
@@ -201,12 +208,12 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-.info_complementaire h2 {
+.product_sheet .info_complementaire h2 {
   width: 100%;
   text-align: center;
 }
 
-.info_complementaire .contenu_complementaire {
+.product_sheet .info_complementaire .contenu_complementaire {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
@@ -214,28 +221,12 @@
   position: relative;
 }
 
-.info_complementaire .contenu_complementaire p {
+.product_sheet .info_complementaire .contenu_complementaire ul {
   text-align: justify;
   margin-right: var(--spacing-sm);
   line-height: var(--spacing-md);
 }
 
-.info_complementaire .contenu_complementaire .separateur_product_sheet {
-  border: 3px solid black;
-  position: absolute;
-  margin-left: 45%;
-  width: 1px;
-  height: 100%;
-}
-
-.info_complementaire .contenu_complementaire .contenu_1,
-.info_complementaire .contenu_complementaire .contenu_2 {
-  width: 50%;
-}
-
-.info_complementaire .contenu_complementaire .contenu_2 {
-  margin-left: var(--spacing-lg);
-}
 
 /* ===============================
    🛍️ PRODUITS SIMILAIRES
@@ -407,24 +398,11 @@
   }
 
   /* Infos complémentaires : une seule colonne */
-  .product_sheet .info_complementaire {
+  .product_sheet .product_sheet .info_complementaire {
     width: 85%;
     padding: var(--spacing-md);
   }
 
-  .info_complementaire .contenu_complementaire {
-    flex-direction: column;
-    gap: var(--spacing-md);
-  }
-
-  .info_complementaire .contenu_complementaire .contenu_1,
-  .info_complementaire .contenu_complementaire .contenu_2 {
-    width: 100%;
-  }
-
-  .info_complementaire .contenu_complementaire .separateur_product_sheet {
-    display: none;
-  }
 }
 
 .similaires {
@@ -512,21 +490,8 @@
     padding: var(--spacing-sm);
   }
 
-  .info_complementaire h2 {
+  .product_sheet.info_complementaire h2 {
     font-size: 1.2rem;
   }
 
-  .info_complementaire .contenu_complementaire {
-    flex-direction: column;
-    gap: var(--spacing-sm);
-  }
-
-  .info_complementaire .contenu_complementaire .contenu_1,
-  .info_complementaire .contenu_complementaire .contenu_2 {
-    width: 100%;
-  }
-
-  .info_complementaire .contenu_complementaire .separateur_product_sheet {
-    display: none;
-  }
 }

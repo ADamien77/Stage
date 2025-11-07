@@ -100,11 +100,40 @@ if (have_posts()) :
        📌 Informations complémentaires
       ================================ -->
       <div class="info_complementaire">
+        <h2>Informations complémentaires</h2>
         <div class="contenu_complementaire">
-          <?php woocommerce_product_additional_information_tab(); ?>
+          <?php
+          global $product;
+
+          // Récupération des champs ACF
+          $essence = get_field('essence_de_bois', $product->get_id());
+          $dimension = get_field('dimension', $product->get_id());
+          $finition = get_field('finition', $product->get_id());
+
+          // Affichage conditionnel
+          if ($essence || $dimension) :
+          ?>
+            <ul class="liste-info-complementaire">
+              <?php if ($essence) : ?>
+                <li><strong>Essence de bois :</strong> <?= esc_html($essence); ?></li>
+              <?php endif; ?>
+
+              <?php if ($dimension) : ?>
+                <li><strong>Dimension :</strong> <?= esc_html($dimension); ?></li>
+              <?php endif; ?>
+              <?php if ($finition) : ?>
+                <li><strong>Finition :</strong> <?= esc_html($finition); ?></li>
+              <?php endif; ?>
+            </ul>
+          <?php else : ?>
+            <p>Aucune information complémentaire pour ce produit.</p>
+          <?php endif; ?>
         </div>
       </div>
-      <?php comments_template(); ?>
+
+<?php comments_template(); ?>
+
+
 
       <!-- ===============================
      Produits similaires

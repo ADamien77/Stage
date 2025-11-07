@@ -30,8 +30,9 @@
   align-items: center;
   margin: var(--spacing-xs) auto var(--spacing-lg) auto;
   padding: var(--spacing-md);
-  background-image: url('../img/fond_bois_article_blog.jpg');
-  background-size: cover;
+  background: 
+    linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
+    url("../img/fond_bois_article_blog.jpg") center/cover;
   border-radius: 20px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   width: 90%;
