@@ -13,8 +13,8 @@ jobs:
    - name: Deploy via FTP
      uses: SamKirkland/FTP-Deploy-Action@v4.3.0
      with:
-       ftp_host: ${{ secrets.FTP_HOST }}
-       ftp_user: ${{ secrets.FTP_USER }}
-       ftp_pass: ${{ secrets.FTP_PASS }}
+       ftp_host: ${{ secrets.ftp_host }}
+       ftp_user: ${{ secrets.ftp_username }}
+       ftp_pass: ${{ secrets.ftp_password }}
        local_dir: .
        remote_dir: bois-ecommerce.devadam.fr/wp-content/themes/mon-theme/
