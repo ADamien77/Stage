@@ -19,4 +19,4 @@ steps:
     ftp_user: ${{ secrets.FTP_USER }}
     ftp_pass: ${{ secrets.FTP_PASS }}
     local_dir: .
-    remote_dir: /wp-content/themes/mon-theme/
+    remote_dir: bois-ecommerce.devadam.fr/wp-content/themes/mon-theme/
