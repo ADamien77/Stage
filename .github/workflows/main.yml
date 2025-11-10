@@ -3,18 +3,18 @@ on:
   branches:
       - main
 jobs: 
- deploy:
-  runs-on: ubuntu-latest
+  deploy:
+    runs-on: ubuntu-latest
 
-  steps:
-   - name: Checkout code
-     uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-   - name: Deploy via FTP
-     uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-     with:
-       ftp_host: ${{ secrets.ftp_host }}
-       ftp_user: ${{ secrets.ftp_username }}
-       ftp_pass: ${{ secrets.ftp_password }}
-       local_dir: ./
-       remote_dir: /bois-ecommerce.devadam.fr/wp-content/themes/mon-theme/
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          ftp_host: ${{ secrets.ftp_host }}
+          ftp_user: ${{ secrets.ftp_username }}
+          ftp_pass: ${{ secrets.ftp_password }}
+          local_dir: ./
+          remote_dir: /bois-ecommerce.devadam.fr/wp-content/themes/mon-theme/
