@@ -1,22 +1,23 @@
-yaml name: Déploiement sur FTP
-on: push
-branches:
-  - main
-  jobs: deploy
+on: 
+ push:
+  branches:
+      - main
+jobs: 
+ deploy:
   runs-on: ubuntu-latest
 
-steps:
-- name: Checkout code
-  uses: actions/checkout@v2
+  steps:
+   - name: Checkout code
+     uses: actions/checkout@v2
 
-- name: Install dependencies
-  run: npm install || composer install || gem install
+   - name: Install dependencies
+     run: npm install || composer install || gem install
 
-- name: Deploy via FTP
-  uses: SamKirkland/FTP-Deploy-Action@v4.3.0
-  with:
-    ftp_host: ${{ secrets.FTP_HOST }}
-    ftp_user: ${{ secrets.FTP_USER }}
-    ftp_pass: ${{ secrets.FTP_PASS }}
-    local_dir: .
-    remote_dir: bois-ecommerce.devadam.fr/wp-content/themes/mon-theme/
+   - name: Deploy via FTP
+     uses: SamKirkland/FTP-Deploy-Action@v4.3.0
+     with:
+       ftp_host: ${{ secrets.FTP_HOST }}
+       ftp_user: ${{ secrets.FTP_USER }}
+       ftp_pass: ${{ secrets.FTP_PASS }}
+       local_dir: .
+       remote_dir: bois-ecommerce.devadam.fr/wp-content/themes/mon-theme/
