@@ -1,20 +1,26 @@
-on: 
- push:
-  branches:
+on:
+  push:
+    branches:
       - main
-jobs: 
-  deploy:
+
+name: 🚀 Deploy website on push
+
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
 
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.0
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          ftp_host: ${{ secrets.ftp_host }}
-          ftp_user: ${{ secrets.ftp_user }}
-          ftp_pass: ${{ secrets.ftp_pass }}
-          local_dir: .
-          remote_dir: /wp-content/themes/mon-theme/
+          server:   ${{ secrets.FTP_HOST }}       # ex: ftp.example.com
+          username: ${{ secrets.FTP_USERNAME }}   # ex: deploy@example.com
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps                          # ou 'ftp' selon ton hébergeur
+          port: 21                                # ajuste si besoin
+          local-dir: ./                           # dossier local à envoyer
+          server-dir: /wp-content/themes/mon-theme/ # dossier cible sur le serveur
+
