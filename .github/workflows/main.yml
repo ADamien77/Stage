@@ -16,5 +16,5 @@ jobs:
           ftp_host: ${{ secrets.ftp_host }}
           ftp_user: ${{ secrets.ftp_user }}
           ftp_pass: ${{ secrets.ftp_pass }}
-          local_dir: ./
+          local_dir: .
           remote_dir: /wp-content/themes/mon-theme/
