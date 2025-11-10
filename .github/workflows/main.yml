@@ -2,7 +2,7 @@ yaml name: Déploiement sur FTP
 on: push
 branches:
   - main
-  jobs: deploy:
+  jobs: deploy
   runs-on: ubuntu-latest
 
 steps:
