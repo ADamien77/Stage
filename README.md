@@ -120,6 +120,10 @@ L’administration WooCommerce permet :
 
 ---
 
+## Deploiement CICD
+
+---
+
 ## Auteur
 **Nom :** Damien Abadie  
 **Formation :** Titre Professionnel Developpeur Web et Web Mobile 2025  
