@@ -1,4 +1,4 @@
-# Site e-commerce – Artisan Bois
+# Site e-commerce – Artisan Bois 
 
 ## Présentation du projet
 Ce projet a été réalisé dans le cadre d’un **Titre Professionnel Developpeur Web et Web Mobile 2025** lors d’un **stage de développement web**.  
