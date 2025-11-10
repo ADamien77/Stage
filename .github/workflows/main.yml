@@ -17,4 +17,4 @@ jobs:
           ftp_user: ${{ secrets.ftp_username }}
           ftp_pass: ${{ secrets.ftp_password }}
           local_dir: ./
-          remote_dir: /bois-ecommerce.devadam.fr/wp-content/themes/mon-theme/
+          remote_dir: /wp-content/themes/mon-theme/
