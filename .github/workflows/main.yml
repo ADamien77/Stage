@@ -1,5 +1,5 @@
 yaml name: Déploiement sur FTP
-on: push:
+on: push
 branches:
   - main
   jobs: deploy:
