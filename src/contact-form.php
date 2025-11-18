@@ -14,7 +14,7 @@ function montheme_traitement_formulaire() {
         $email   = sanitize_email($_POST['email']);
         $message = sanitize_textarea_field($_POST['message']);
 
-        $to      = 'abadie.damien@devadam.com';
+        $to      = 'abadie.damien@devadam.fr';
         $subject = "Nouveau message de $prenom $nom via le formulaire de contact";
         $body    = "Nom : $nom\nPrénom : $prenom\nEmail : $email\n\nMessage :\n$message";
         $headers = array('Content-Type: text/plain; charset=UTF-8');
