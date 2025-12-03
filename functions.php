@@ -13,3 +13,21 @@ include get_template_directory() . '/src/product-plaque.php'; /*Fiche produit Pl
 include get_template_directory() . '/src/contact-form.php'; /*Formulaire de contact personnalisé*/
 include get_template_directory() . '/src/search-redirect.php'; /*Optimisation de recherche et redirection*/
 
+add_action('init', function() {
+    if ( isset($_GET['test_mail']) ) {
+
+        error_log('✉️ Test mail lancé');
+
+        $sent = wp_mail(
+            'abadie.damien@devadam.com',
+            'Test wp_mail() depuis Local',
+            'Ceci est un test simple.'
+        );
+
+        if ( $sent ) {
+            error_log('✉️ wp_mail() a renvoyé TRUE');
+        } else {
+            error_log('✉️ wp_mail() a renvoyé FALSE');
+        }
+    }
+});

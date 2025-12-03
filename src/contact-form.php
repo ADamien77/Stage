@@ -7,12 +7,12 @@
  * Traitement du formulaire de contact "en dur"
  */
 function montheme_traitement_formulaire() {
-    if (isset($_POST['form_contact'])) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_contact'])) {
 
-        $nom     = sanitize_text_field($_POST['nom']);
-        $prenom  = sanitize_text_field($_POST['prenom']);
-        $email   = sanitize_email($_POST['email']);
-        $message = sanitize_textarea_field($_POST['message']);
+        $nom     = isset($_POST['nom'])     ? sanitize_text_field($_POST['nom'])     : '';
+        $prenom  = isset($_POST['prenom'])  ? sanitize_text_field($_POST['prenom'])  : '';
+        $email   = isset($_POST['email'])   ? sanitize_email($_POST['email'])        : '';
+        $message = isset($_POST['message']) ? sanitize_textarea_field($_POST['message']) : '';
 
         $to      = 'abadie.damien@devadam.fr';
         $subject = "Nouveau message de $prenom $nom via le formulaire de contact";
@@ -26,5 +26,5 @@ function montheme_traitement_formulaire() {
         }
     }
 }
-add_action('wp_head', 'montheme_traitement_formulaire');
+add_action('init', 'montheme_traitement_formulaire');
 

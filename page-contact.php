@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template Name: Page Contact
  */
@@ -6,10 +7,11 @@
 // === Traitement du formulaire ===
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_contact'])) {
     // Sécurisation des champs
-    $nom     = sanitize_text_field($_POST['nom']);
-    $prenom  = sanitize_text_field($_POST['prenom']);
-    $email   = sanitize_email($_POST['email']);
-    $message = sanitize_textarea_field($_POST['message']);
+    $nom     = isset($_POST['nom'])     ? sanitize_text_field($_POST['nom'])     : '';
+    $prenom  = isset($_POST['prenom'])  ? sanitize_text_field($_POST['prenom'])  : '';
+    $email   = isset($_POST['email'])   ? sanitize_email($_POST['email'])        : '';
+    $message = isset($_POST['message']) ? sanitize_textarea_field($_POST['message']) : '';
+
 
     // Destinataire : l’admin WordPress 
     $to      = get_option('admin_email');
@@ -80,4 +82,5 @@ get_header(); // appelle header.php
     </div>
 </section>
 
-<?php get_footer(); // appelle footer.php ?>
+<?php get_footer(); // appelle footer.php 
+?>
