@@ -521,7 +521,7 @@
 /* ----- Tablettes (max 1024px) ----- */
 @media screen and (max-width: 1024px) {
   .hero {
-    height: 70vh;
+    height: 50vh;
     padding: 1.5rem;
   }
 
@@ -691,6 +691,8 @@
   .presentation .cards .card_1,
   .presentation .cards .card_2 {
     width: 100%;
+    height: 30vh;
+
   }
 
   .presentation .cards .card_1 a,
