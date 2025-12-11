@@ -4,22 +4,21 @@
 
 /* Conteneur principal */
 .single-article {
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
-  padding: var(--spacing-md);
   font-family: var(--font-family);
 }
 
 /* Titre de l'article */
 .single-article .title_blog {
   text-align: center;
-  margin-bottom: var(--spacing-md);
+
+
 }
 
 .single-article .title_blog h1 {
   font-size: clamp(1.5rem, 2vw, 2.2rem);
   margin: var(--spacing-sm) auto;
-  width: 50%;
 }
 
 /* Ligne séparatrice */
@@ -111,6 +110,7 @@
 
     .single-article .title_blog .separateur {
         margin:0 auto;
+        width: 0;
     }
 
   .single-article .title_blog h1 {

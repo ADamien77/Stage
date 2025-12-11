@@ -146,7 +146,7 @@
    =============================== */
 @media screen and (max-width: 1024px) {
   .title_blog h1 {
-    width: 100%;
+    width: 50%;
   }
 
   .article_1 {

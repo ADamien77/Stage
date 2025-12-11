@@ -76,7 +76,7 @@
     $args = array(
       'post_type'      => 'product',
       'posts_per_page' => 3,
-      'orderby'        => 'date',
+      'orderby'        => 'post_date',
       'order'          => 'DESC',
     );
 

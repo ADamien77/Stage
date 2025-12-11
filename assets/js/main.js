@@ -108,7 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     accountIcon.addEventListener("click", function(e) {
       if (window.innerWidth <= 1024) { // Mobile/tablette
-        e.preventDefault();
         mobileMenu.classList.toggle("active");
       }
     });
